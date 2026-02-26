@@ -9,8 +9,8 @@
 import { IDL } from '@icp-sdk/core/candid';
 
 export const StudentId = IDL.Text;
-export const AssignmentTitle = IDL.Text;
 export const SubmissionId = IDL.Nat;
+export const AssignmentTitle = IDL.Text;
 export const Suggestion = IDL.Record({ 'text' : IDL.Text });
 export const Time = IDL.Int;
 export const GeneratedFeedback = IDL.Record({
@@ -19,6 +19,15 @@ export const GeneratedFeedback = IDL.Record({
   'score' : IDL.Nat,
   'timestamp' : Time,
   'submissionId' : SubmissionId,
+});
+export const Pin = IDL.Text;
+export const InstructorId = IDL.Nat;
+export const Instructor = IDL.Record({
+  'pin' : Pin,
+  'name' : IDL.Text,
+  'email' : IDL.Text,
+  'instructorId' : InstructorId,
+  'department' : IDL.Text,
 });
 export const Student = IDL.Record({
   'studentId' : StudentId,
@@ -32,9 +41,18 @@ export const FeedbackSubmission = IDL.Record({
   'submissionId' : SubmissionId,
   'assignmentTitle' : AssignmentTitle,
 });
+export const SystemStats = IDL.Record({
+  'topStudent' : IDL.Opt(
+    IDL.Record({ 'studentId' : StudentId, 'averageScore' : IDL.Int })
+  ),
+  'totalStudents' : IDL.Nat,
+  'totalSubmissions' : IDL.Nat,
+  'overallAverageScore' : IDL.Int,
+});
 
 export const idlService = IDL.Service({
   'addStudent' : IDL.Func([StudentId, IDL.Text, IDL.Text], [], []),
+  'addSubmissionNote' : IDL.Func([SubmissionId, IDL.Text], [], []),
   'createSubmission' : IDL.Func(
       [StudentId, AssignmentTitle, IDL.Text],
       [SubmissionId],
@@ -46,6 +64,7 @@ export const idlService = IDL.Service({
       [IDL.Vec(GeneratedFeedback)],
       ['query'],
     ),
+  'getAllInstructors' : IDL.Func([], [IDL.Vec(Instructor)], ['query']),
   'getAllStudents' : IDL.Func([], [IDL.Vec(Student)], ['query']),
   'getAllSubmissionsByStudent' : IDL.Func(
       [StudentId],
@@ -53,6 +72,7 @@ export const idlService = IDL.Service({
       ['query'],
     ),
   'getFeedback' : IDL.Func([SubmissionId], [GeneratedFeedback], ['query']),
+  'getInstructor' : IDL.Func([InstructorId], [Instructor], ['query']),
   'getStudent' : IDL.Func([StudentId], [Student], ['query']),
   'getStudentStats' : IDL.Func(
       [StudentId],
@@ -64,14 +84,27 @@ export const idlService = IDL.Service({
       [FeedbackSubmission],
       ['query'],
     ),
+  'getSubmissionNote' : IDL.Func([SubmissionId], [IDL.Text], ['query']),
+  'getSystemStats' : IDL.Func([], [SystemStats], ['query']),
+  'registerInstructor' : IDL.Func(
+      [IDL.Text, IDL.Text, IDL.Text, Pin],
+      [InstructorId],
+      [],
+    ),
+  'updateInstructor' : IDL.Func(
+      [InstructorId, IDL.Text, IDL.Text, IDL.Text, Pin],
+      [],
+      [],
+    ),
+  'verifyInstructor' : IDL.Func([InstructorId, Pin], [IDL.Bool], ['query']),
 });
 
 export const idlInitArgs = [];
 
 export const idlFactory = ({ IDL }) => {
   const StudentId = IDL.Text;
-  const AssignmentTitle = IDL.Text;
   const SubmissionId = IDL.Nat;
+  const AssignmentTitle = IDL.Text;
   const Suggestion = IDL.Record({ 'text' : IDL.Text });
   const Time = IDL.Int;
   const GeneratedFeedback = IDL.Record({
@@ -80,6 +113,15 @@ export const idlFactory = ({ IDL }) => {
     'score' : IDL.Nat,
     'timestamp' : Time,
     'submissionId' : SubmissionId,
+  });
+  const Pin = IDL.Text;
+  const InstructorId = IDL.Nat;
+  const Instructor = IDL.Record({
+    'pin' : Pin,
+    'name' : IDL.Text,
+    'email' : IDL.Text,
+    'instructorId' : InstructorId,
+    'department' : IDL.Text,
   });
   const Student = IDL.Record({
     'studentId' : StudentId,
@@ -93,9 +135,18 @@ export const idlFactory = ({ IDL }) => {
     'submissionId' : SubmissionId,
     'assignmentTitle' : AssignmentTitle,
   });
+  const SystemStats = IDL.Record({
+    'topStudent' : IDL.Opt(
+      IDL.Record({ 'studentId' : StudentId, 'averageScore' : IDL.Int })
+    ),
+    'totalStudents' : IDL.Nat,
+    'totalSubmissions' : IDL.Nat,
+    'overallAverageScore' : IDL.Int,
+  });
   
   return IDL.Service({
     'addStudent' : IDL.Func([StudentId, IDL.Text, IDL.Text], [], []),
+    'addSubmissionNote' : IDL.Func([SubmissionId, IDL.Text], [], []),
     'createSubmission' : IDL.Func(
         [StudentId, AssignmentTitle, IDL.Text],
         [SubmissionId],
@@ -107,6 +158,7 @@ export const idlFactory = ({ IDL }) => {
         [IDL.Vec(GeneratedFeedback)],
         ['query'],
       ),
+    'getAllInstructors' : IDL.Func([], [IDL.Vec(Instructor)], ['query']),
     'getAllStudents' : IDL.Func([], [IDL.Vec(Student)], ['query']),
     'getAllSubmissionsByStudent' : IDL.Func(
         [StudentId],
@@ -114,6 +166,7 @@ export const idlFactory = ({ IDL }) => {
         ['query'],
       ),
     'getFeedback' : IDL.Func([SubmissionId], [GeneratedFeedback], ['query']),
+    'getInstructor' : IDL.Func([InstructorId], [Instructor], ['query']),
     'getStudent' : IDL.Func([StudentId], [Student], ['query']),
     'getStudentStats' : IDL.Func(
         [StudentId],
@@ -130,6 +183,19 @@ export const idlFactory = ({ IDL }) => {
         [FeedbackSubmission],
         ['query'],
       ),
+    'getSubmissionNote' : IDL.Func([SubmissionId], [IDL.Text], ['query']),
+    'getSystemStats' : IDL.Func([], [SystemStats], ['query']),
+    'registerInstructor' : IDL.Func(
+        [IDL.Text, IDL.Text, IDL.Text, Pin],
+        [InstructorId],
+        [],
+      ),
+    'updateInstructor' : IDL.Func(
+        [InstructorId, IDL.Text, IDL.Text, IDL.Text, Pin],
+        [],
+        [],
+      ),
+    'verifyInstructor' : IDL.Func([InstructorId, Pin], [IDL.Bool], ['query']),
   });
 };
 

@@ -1,158 +1,210 @@
 {
   "kind": "build_request",
-  "title": "AI-Enhanced Student Feedback System",
-  "projectName": "SmartFeedback",
+  "title": "Add more features and fully enable instructor panel",
+  "projectName": "Anurag University Feedback System",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-1",
-      "text": "Design and implement a cohesive visual theme for the application: use a clean academic aesthetic with warm amber and teal accents, modern sans-serif typography, card-based layouts, and subtle animations. Apply the theme consistently across all pages and components.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ]
-      },
-      "acceptanceCriteria": [
-        "All pages share a unified color palette (warm amber + teal primary colors, neutral backgrounds)",
-        "Typography is consistent across headings, body text, and labels",
-        "Card-based layout is used for feedback items and dashboard panels",
-        "Visual style is coherent and professional across all views"
-      ]
-    },
-    {
-      "id": "REQ-2",
-      "text": "Create a backend data model and API to manage Students, Instructors, FeedbackSubmissions, and GeneratedFeedback. Store student profiles (name, studentId, course), submissions (studentId, assignmentTitle, submissionText, timestamp), and AI-generated feedback (submissionId, feedbackText, score, suggestions, timestamp). Expose CRUD operations for all entities.",
+      "id": "REQ-20",
+      "text": "Extend the backend to support instructor accounts: add an Instructor data type with fields (instructorId, name, email, department, password/pin), and expose CRUD operations to register, retrieve, update, and delete instructors. Store instructors in a persistent Map.",
       "target": "backend",
       "source": {
         "messageIds": [
-          "msg-2"
+          "msg-1"
+        ],
+        "quotes": [
+          "add more features and enable instructor"
         ]
       },
       "acceptanceCriteria": [
-        "Students can be created, listed, and retrieved by ID",
-        "Feedback submissions can be created and listed per student",
-        "Generated feedback records can be stored and retrieved by submissionId",
-        "All data persists across canister upgrades"
+        "Instructors can be added with name, email, department, and a simple PIN/password",
+        "Instructor records are persisted across canister upgrades",
+        "CRUD operations (create, get, update, delete) are exposed for instructors",
+        "getInstructor and getAllInstructors query calls return correct data"
       ]
     },
     {
-      "id": "REQ-3",
-      "text": "Build a student feedback submission interface where students can enter their name and student ID, select or type an assignment title, write their submission text, and submit it for AI feedback. Show a loading state while feedback is being processed and display the returned feedback inline after submission.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Form includes fields: student name, student ID, assignment title, submission text",
-        "Submit button triggers backend call and shows a loading indicator",
-        "Generated feedback (score, text, suggestions) is displayed below the form after submission",
-        "Form validates that all required fields are filled before submission"
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "text": "Implement AI-powered feedback analysis in the backend: when a submission is received, generate structured feedback including an overall score (0–100), a qualitative feedback paragraph, and a list of 3–5 actionable improvement suggestions. Use rule-based heuristics (e.g., word count, keyword presence, structure detection) to simulate AI scoring since external AI APIs are not available.",
+      "id": "REQ-21",
+      "text": "Add backend support for instructor authentication: expose a verifyInstructor(instructorId, pin) query that returns a boolean indicating whether the credentials are valid. This allows the frontend to gate instructor panel access behind a simple login form.",
       "target": "backend",
       "source": {
         "messageIds": [
-          "msg-2"
+          "msg-1"
+        ],
+        "quotes": [
+          "enable instructor"
         ]
       },
       "acceptanceCriteria": [
-        "Every submission returns a score between 0 and 100",
-        "Feedback includes a qualitative paragraph tailored to the submission content",
-        "At least 3 improvement suggestions are returned per submission",
-        "Analysis results are stored and retrievable by submissionId"
+        "verifyInstructor returns true only when both instructorId and pin match a registered instructor",
+        "Returns false for unknown instructorId or wrong pin",
+        "No plaintext pin is ever returned in query results"
       ]
     },
     {
-      "id": "REQ-5",
-      "text": "Build a student dashboard where students can enter their student ID to view all their past submissions and the corresponding AI-generated feedback. Each submission card should show the assignment title, submission date, score, feedback paragraph, and improvement suggestions.",
+      "id": "REQ-22",
+      "text": "Add a backend function to record and retrieve instructor annotations/notes on student submissions: instructors can add a text note to any submissionId (instructorNote: Text), and the note is persisted and retrievable via getSubmissionNote(submissionId).",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "add more features and enable instructor"
+        ]
+      },
+      "acceptanceCriteria": [
+        "addInstructorNote(submissionId, note) persists a note keyed by submissionId",
+        "getSubmissionNote(submissionId) returns the note if it exists",
+        "Notes survive canister upgrades"
+      ]
+    },
+    {
+      "id": "REQ-23",
+      "text": "Add a backend function getSystemStats() that returns aggregate platform statistics: total number of students, total number of submissions, overall average score across all submissions, and top-performing student (highest average score). This powers a system-wide analytics view for instructors.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "add more features"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Returns total student count, total submission count, and global average score",
+        "Returns the studentId and name of the student with the highest average score",
+        "Returns 0 / empty values gracefully when no data exists"
+      ]
+    },
+    {
+      "id": "REQ-24",
+      "text": "Gate the Instructor Panel page (frontend/src/pages/InstructorPanel.tsx) behind a simple login form. On first load, show an Instructor Login card asking for Instructor ID and PIN. On successful verification (via the verifyInstructor backend call), reveal the full instructor panel. Add a Logout button that clears the session and returns to the login card.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-2"
+          "msg-1"
+        ],
+        "quotes": [
+          "enable instructor"
         ]
       },
       "acceptanceCriteria": [
-        "Students can look up their history by student ID",
-        "Each submission is displayed as a card with: assignment title, date, score badge, feedback text, and suggestions list",
-        "Cards are sorted by most recent first",
-        "Empty state is shown if no submissions are found"
+        "Instructor Panel shows a login form before any data is displayed",
+        "Correct credentials unlock the full panel; incorrect credentials show an error message",
+        "A Logout button is visible once logged in and returns the user to the login screen",
+        "Auth state is held in component state (not persisted across page refresh)"
       ]
     },
     {
-      "id": "REQ-6",
-      "text": "Build an instructor/admin panel that lists all students and their submissions. Instructors can view any student's full feedback history, see aggregate stats (total submissions, average score across all students), and manually add or remove students from the system.",
-      "target": "both",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Admin panel shows a table of all students with their total submission count and average score",
-        "Clicking a student reveals their full feedback history",
-        "Aggregate stats (total submissions, overall average score) are shown at the top of the panel",
-        "Instructors can add a new student (name, studentId, course) via a form",
-        "Instructors can delete a student and all their associated data"
-      ]
-    },
-    {
-      "id": "REQ-7",
-      "text": "Create a landing/home page that introduces the SmartFeedback platform, highlights key features (AI-powered analysis, instant feedback, progress tracking), and provides navigation buttons to the Student Submission page, Student Dashboard, and Instructor Panel.",
+      "id": "REQ-25",
+      "text": "Enhance the Instructor Panel with a System Analytics section that displays platform-wide stats fetched from getSystemStats(): total students enrolled, total submissions received, overall average score, and top-performing student. Render these as stat cards consistent with the au-red/au-navy brand palette.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-2"
+          "msg-1"
+        ],
+        "quotes": [
+          "add more features and enable instructor"
         ]
       },
       "acceptanceCriteria": [
-        "Hero section with app name, tagline, and two primary CTA buttons (Submit Feedback, View Dashboard)",
-        "Feature highlights section with at least 3 feature cards",
-        "Navigation header links to all main sections",
-        "Page is responsive and visually consistent with the overall theme"
+        "Four stat cards displayed: Total Students, Total Submissions, Average Score, Top Student",
+        "Values update when the panel is loaded or refreshed",
+        "Stat cards use the au-red/au-navy palette and animate in with the existing entrance animation pattern"
       ]
     },
     {
-      "id": "REQ-8",
-      "text": "Render the generated hero banner and feature icons as static assets from frontend/public/assets/generated.",
+      "id": "REQ-26",
+      "text": "Add an Instructor Notes feature to the Instructor Panel: when viewing a student's submission detail, show a text area for the instructor to write and save a note on that submission. On save, call addInstructorNote; on load, call getSubmissionNote and pre-fill the text area. Show save confirmation with a toast notification.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-2"
+          "msg-1"
+        ],
+        "quotes": [
+          "add more features and enable instructor"
         ]
       },
       "acceptanceCriteria": [
-        "Hero banner image is displayed on the landing page",
-        "Feature section icons are displayed in their respective cards",
-        "Images load correctly from the /assets/generated path"
+        "Each submission detail view in the Instructor Panel includes a notes text area",
+        "Saving a note calls the backend and shows a success toast",
+        "Existing notes are loaded and displayed when the submission is expanded",
+        "Empty note state shows a placeholder prompt to the instructor"
+      ]
+    },
+    {
+      "id": "REQ-27",
+      "text": "Add a Manage Instructors sub-section inside the Instructor Panel (visible only when logged in) that allows adding new instructor accounts (name, department, instructorId, PIN) and deleting existing ones. Display registered instructors in a table similar to the existing StudentTable component, using the same au-red/au-navy styling.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "add more features and enable instructor"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A 'Manage Instructors' tab or section is accessible within the Instructor Panel when authenticated",
+        "Form to add a new instructor with name, department, ID, and PIN fields",
+        "Table lists existing instructors with a Delete action button per row",
+        "Adding or deleting an instructor refreshes the list"
+      ]
+    },
+    {
+      "id": "REQ-28",
+      "text": "Add React Query hooks in frontend/src/hooks/useQueries.ts for the new backend calls: useVerifyInstructor, useGetSystemStats, useAddInstructorNote, useGetSubmissionNote, useGetAllInstructors, useAddInstructor, and useDeleteInstructor. Follow the existing hook patterns in the file.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "enable instructor"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Each new hook mirrors the naming and structure conventions of existing hooks",
+        "Mutation hooks invalidate relevant queries on success",
+        "useGetSystemStats is a query hook; mutation hooks use useMutation"
+      ]
+    },
+    {
+      "id": "REQ-29",
+      "text": "Add a 'Score Distribution' chart to the Instructor Panel using a simple CSS/Tailwind bar chart (no external charting library): display the count of submissions bucketed into score ranges (0–20, 21–40, 41–60, 61–80, 81–100). Fetch the data from existing getAllSubmissions or derive from student stats. Style bars in au-red with labels below each bar.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "add more features"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Five score-range buckets are displayed as proportional horizontal or vertical bars",
+        "Bars are styled in au-red (#C8102E) with white labels",
+        "Chart updates when the panel data refreshes",
+        "Gracefully shows an empty state if no submissions exist"
       ]
     }
   ],
   "constraints": [
-    "All backend logic must reside in a single Motoko actor in backend/main.mo",
-    "No external AI APIs may be used; feedback generation must use rule-based heuristics in Motoko",
-    "Do not modify any files under frontend/src/hooks/ or frontend/src/components/ui",
-    "No external databases; all data must be stored in Motoko stable variables"
+    "Do not modify files listed in frontend.immutablePaths",
+    "All Motoko logic must remain in backend/main.mo (single-actor architecture)",
+    "Instructor PIN must not be returned in any query result",
+    "No external charting libraries — use Tailwind/CSS-only for the score distribution chart",
+    "Preserve all existing animations, color tokens, and layout structure"
   ],
   "nonGoals": [
-    "Real-time notifications or WebSocket-based updates",
-    "Internet Identity or user authentication in this initial build",
-    "Email or SMS notifications to students or instructors",
-    "Mobile native app (web-only)",
-    "Integration with external LMS platforms (e.g., Canvas, Moodle)"
+    "Real authentication or session tokens — PIN verification is in-memory/component-state only",
+    "Email notifications to instructors",
+    "Role-based access control beyond the simple PIN gate",
+    "Internet Identity integration for instructors"
   ],
   "imageRequirements": {
-    "required": [
-      "Wide hero banner illustration showing a student at a desk with glowing AI feedback elements and floating document icons, warm amber and teal color palette (hero-banner.dim_1200x400.png)",
-      "Small flat icon of a brain with circuit lines representing AI analysis (icon-ai.dim_128x128.png)",
-      "Small flat icon of a document with a checkmark representing feedback submission (icon-submit.dim_128x128.png)",
-      "Small flat icon of a bar chart with an upward trend representing progress tracking (icon-progress.dim_128x128.png)"
-    ],
+    "required": [],
     "edits": []
   }
 }

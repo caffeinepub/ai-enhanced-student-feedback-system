@@ -1,14 +1,13 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 3,
-  "summary": "AI-enhanced feedback system website for students. The platform will leverage AI to provide intelligent, personalized feedback to students.",
+  "projectStateVersion": 11,
+  "summary": "AI-enhanced feedback system website for students at Anurag University. The platform will leverage AI to provide intelligent, personalized feedback to students. Branded as 'Anurag University Student Feedback System' with custom logo integration and animated branding.",
   "architectural_notes": [
     "Web-based application targeting students and instructors",
     "AI integration for feedback analysis and personalized suggestions"
   ],
   "known_issues": [],
   "isFixRequest": false,
-  "imageRequirements": "## Required Images\n- Wide hero banner illustration showing a student at a desk with glowing AI feedback elements and floating document icons, warm amber and teal color palette (hero-banner.dim_1200x400.png)\n- Small flat icon of a brain with circuit lines representing AI analysis (icon-ai.dim_128x128.png)\n- Small flat icon of a document with a checkmark representing feedback submission (icon-submit.dim_128x128.png)\n- Small flat icon of a bar chart with an upward trend representing progress tracking (icon-progress.dim_128x128.png)",
   "existing_features": [
     {
       "id": "feature-design-and-implement-a-cohesive-visual-theme-for-the-application-use-a-clean-academic-aesthetic-with-warm-amber-and-teal-accents-modern-sans-serif-typography-card-based-layouts-and-subtle-animations-apply-the-theme-consistently-across-all-pages-and-components",
@@ -57,6 +56,142 @@
         "REQ-8"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-enhance-the-home-landing-page-with-rich-animated-elements-add-a-smooth-fade-in-slide-up-entrance-animation-for-the-hero-headline-and-subtext-animate-the-cta-buttons-with-a-gentle-pulse-or-glow-effect-on-hover-add-a-animated-gradient-or-subtle-particle-wave-background-behind-the-hero-section-and-animate-the-platform-stats-counters-so-they-count-up-from-zero-when-they-enter-the-viewport",
+      "title": "Enhance the Home landing page with rich animated elements: add a smooth fade-in + slide-up entrance animation for the hero headline and subtext, animate the CTA buttons with a gentle pulse or glow effect on hover, add a animated gradient or subtle particle/wave background behind the hero section, and animate the platform stats counters so they count up from zero when they enter the viewport.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-staggered-entrance-animations-to-featurecard-components-on-the-home-page-so-each-card-fades-and-slides-in-sequentially-with-a-small-delay-between-each-card-when-the-section-scrolls-into-view",
+      "title": "Add staggered entrance animations to FeatureCard components on the Home page so each card fades and slides in sequentially (with a small delay between each card) when the section scrolls into view.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-upgrade-the-navigation-bar-with-a-smooth-scroll-aware-style-transition-the-nav-should-be-transparent-over-the-hero-and-transition-to-a-frosted-glass-or-solid-background-with-a-shadow-as-the-user-scrolls-down-add-smooth-underline-or-indicator-animations-for-active-link-transitions",
+      "title": "Upgrade the Navigation bar with a smooth scroll-aware style transition: the nav should be transparent over the hero and transition to a frosted-glass or solid background with a shadow as the user scrolls down. Add smooth underline or indicator animations for active link transitions.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-animated-feedback-to-the-studentsubmission-page-show-a-visually-engaging-loading-animation-e-g-animated-spinner-with-pulsing-text-while-feedback-is-being-processed-and-animate-the-feedbackdisplay-component-sliding-in-when-results-arrive",
+      "title": "Add animated feedback to the StudentSubmission page: show a visually engaging loading animation (e.g., animated spinner with pulsing text) while feedback is being processed, and animate the FeedbackDisplay component sliding in when results arrive.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-animate-submissioncard-components-on-the-studentdashboard-page-cards-should-animate-in-with-a-staggered-fade-slide-effect-when-the-list-is-loaded-or-refreshed-add-a-smooth-expand-collapse-animation-for-the-expandable-feedback-section-inside-each-card",
+      "title": "Animate SubmissionCard components on the StudentDashboard page: cards should animate in with a staggered fade-slide effect when the list is loaded or refreshed. Add a smooth expand/collapse animation for the expandable feedback section inside each card.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-interactive-element-micro-animations-globally-all-primary-buttons-should-have-a-satisfying-press-scale-down-animation-on-click-form-inputs-should-animate-their-focus-ring-appearance-and-score-badges-in-feedbackdisplay-and-submissioncard-should-pop-in-with-a-brief-scale-bounce-animation-when-rendered",
+      "title": "Enhance interactive element micro-animations globally: all primary buttons should have a satisfying press/scale-down animation on click, form inputs should animate their focus ring appearance, and score badges in FeedbackDisplay and SubmissionCard should pop in with a brief scale-bounce animation when rendered.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-page-transition-animations-between-routes-when-navigating-between-home-submit-dashboard-and-instructor-panel-apply-a-smooth-fade-or-fade-slide-transition-so-page-changes-feel-fluid-rather-than-instant",
+      "title": "Add page transition animations between routes: when navigating between Home, Submit, Dashboard, and Instructor Panel, apply a smooth fade or fade-slide transition so page changes feel fluid rather than instant.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-rebrand-the-platform-name-across-all-pages-components-and-the-browser-tab-title-from-smartfeedback-to-anurag-university-student-feedback-system-update-the-navigation-bar-footer-home-landing-page-hero-section-and-any-other-locations-where-the-product-name-appears",
+      "title": "Rebrand the platform name across all pages, components, and the browser tab title from 'SmartFeedback' to 'Anurag University Student Feedback System'. Update the Navigation bar, Footer, Home landing page hero section, and any other locations where the product name appears.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-integrate-the-provided-anurag-university-logo-anuragu-jpg-a-red-and-navy-blue-shield-letter-mark-with-anurag-university-text-as-a-static-asset-frontend-public-assets-generated-anuragu-logo-png-display-it-in-the-navigation-bar-replacing-the-current-logo-placeholder-on-the-home-page-hero-section-and-in-the-footer-apply-an-animated-entrance-to-the-logo-a-smooth-scale-up-with-fade-in-on-initial-page-load-and-a-subtle-continuous-shimmer-or-gentle-rotate-and-scale-pulse-animation-so-it-feels-lively-alongside-the-site-name",
+      "title": "Integrate the provided Anurag University logo (anuragu.jpg — a red and navy blue shield/letter mark with 'ANURAG UNIVERSITY' text) as a static asset (frontend/public/assets/generated/anuragu-logo.png). Display it in the Navigation bar replacing the current logo placeholder, on the Home page hero section, and in the Footer. Apply an animated entrance to the logo: a smooth scale-up with fade-in on initial page load, and a subtle continuous shimmer or gentle rotate-and-scale pulse animation so it feels lively alongside the site name.",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-retheme-the-entire-frontend-color-palette-to-a-red-and-white-scheme-that-harmonizes-with-the-anurag-university-logo-red-and-navy-blue-shield-mark-replace-the-current-warm-amber-teal-accent-tokens-in-frontend-src-index-css-and-frontend-tailwind-config-js-with-a-red-dominant-palette-use-the-university-s-red-approximately-c8102e-or-close-match-to-the-logo-s-red-as-the-primary-accent-crisp-white-ffffff-as-the-primary-background-and-deep-navy-1a2b5f-or-similar-as-a-secondary-supporting-dark-tone-for-text-and-headers-update-all-css-custom-property-tokens-primary-accent-button-colors-badge-colors-link-colors-focus-rings-gradients-to-use-this-new-palette-consistently-preserve-the-existing-animation-and-layout-structure-only-color-values-should-change",
+      "title": "Retheme the entire frontend color palette to a red and white scheme that harmonizes with the Anurag University logo (red and navy blue shield mark). Replace the current warm amber/teal accent tokens in frontend/src/index.css and frontend/tailwind.config.js with a red-dominant palette: use the university's red (approximately #C8102E or close match to the logo's red) as the primary accent, crisp white (#FFFFFF) as the primary background, and deep navy (#1A2B5F or similar) as a secondary/supporting dark tone for text and headers. Update all CSS custom property tokens (--primary, --accent, button colors, badge colors, link colors, focus rings, gradients) to use this new palette consistently. Preserve the existing animation and layout structure — only color values should change.",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-hero-section-gradient-background-on-the-home-page-frontend-src-pages-home-tsx-to-use-the-new-red-to-white-or-red-to-navy-gradient-instead-of-the-current-amber-teal-gradient-ensuring-the-animated-particle-wave-background-and-stats-counter-section-also-adopt-the-red-white-color-tokens",
+      "title": "Update the hero section gradient background on the Home page (frontend/src/pages/Home.tsx) to use the new red-to-white or red-to-navy gradient instead of the current amber/teal gradient, ensuring the animated particle/wave background and stats counter section also adopt the red/white color tokens.",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-gate-the-instructor-panel-page-frontend-src-pages-instructorpanel-tsx-behind-a-simple-login-form-on-first-load-show-an-instructor-login-card-asking-for-instructor-id-and-pin-on-successful-verification-via-the-verifyinstructor-backend-call-reveal-the-full-instructor-panel-add-a-logout-button-that-clears-the-session-and-returns-to-the-login-card",
+      "title": "Gate the Instructor Panel page (frontend/src/pages/InstructorPanel.tsx) behind a simple login form. On first load, show an Instructor Login card asking for Instructor ID and PIN. On successful verification (via the verifyInstructor backend call), reveal the full instructor panel. Add a Logout button that clears the session and returns to the login card.",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-the-instructor-panel-with-a-system-analytics-section-that-displays-platform-wide-stats-fetched-from-getsystemstats-total-students-enrolled-total-submissions-received-overall-average-score-and-top-performing-student-render-these-as-stat-cards-consistent-with-the-au-red-au-navy-brand-palette",
+      "title": "Enhance the Instructor Panel with a System Analytics section that displays platform-wide stats fetched from getSystemStats(): total students enrolled, total submissions received, overall average score, and top-performing student. Render these as stat cards consistent with the au-red/au-navy brand palette.",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-instructor-notes-feature-to-the-instructor-panel-when-viewing-a-student-s-submission-detail-show-a-text-area-for-the-instructor-to-write-and-save-a-note-on-that-submission-on-save-call-addinstructornote-on-load-call-getsubmissionnote-and-pre-fill-the-text-area-show-save-confirmation-with-a-toast-notification",
+      "title": "Add an Instructor Notes feature to the Instructor Panel: when viewing a student's submission detail, show a text area for the instructor to write and save a note on that submission. On save, call addInstructorNote; on load, call getSubmissionNote and pre-fill the text area. Show save confirmation with a toast notification.",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-manage-instructors-sub-section-inside-the-instructor-panel-visible-only-when-logged-in-that-allows-adding-new-instructor-accounts-name-department-instructorid-pin-and-deleting-existing-ones-display-registered-instructors-in-a-table-similar-to-the-existing-studenttable-component-using-the-same-au-red-au-navy-styling",
+      "title": "Add a Manage Instructors sub-section inside the Instructor Panel (visible only when logged in) that allows adding new instructor accounts (name, department, instructorId, PIN) and deleting existing ones. Display registered instructors in a table similar to the existing StudentTable component, using the same au-red/au-navy styling.",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-react-query-hooks-in-frontend-src-hooks-usequeries-ts-for-the-new-backend-calls-useverifyinstructor-usegetsystemstats-useaddinstructornote-usegetsubmissionnote-usegetallinstructors-useaddinstructor-and-usedeleteinstructor-follow-the-existing-hook-patterns-in-the-file",
+      "title": "Add React Query hooks in frontend/src/hooks/useQueries.ts for the new backend calls: useVerifyInstructor, useGetSystemStats, useAddInstructorNote, useGetSubmissionNote, useGetAllInstructors, useAddInstructor, and useDeleteInstructor. Follow the existing hook patterns in the file.",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-score-distribution-chart-to-the-instructor-panel-using-a-simple-css-tailwind-bar-chart-no-external-charting-library-display-the-count-of-submissions-bucketed-into-score-ranges-0-20-21-40-41-60-61-80-81-100-fetch-the-data-from-existing-getallsubmissions-or-derive-from-student-stats-style-bars-in-au-red-with-labels-below-each-bar",
+      "title": "Add a 'Score Distribution' chart to the Instructor Panel using a simple CSS/Tailwind bar chart (no external charting library): display the count of submissions bucketed into score ranges (0–20, 21–40, 41–60, 61–80, 81–100). Fetch the data from existing getAllSubmissions or derive from student stats. Style bars in au-red with labels below each bar.",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -97,6 +232,62 @@
       "summary": "Implement AI-powered feedback analysis in the backend: when a submission is received, generate structured feedback including an overall score (0–100), a qualitative feedback paragraph, and a list of 3–5 actionable improvement suggestions. Use rule-based heuristics (e.g., word count, keyword presence, structure detection) to simulate AI scoring since external AI APIs are not available.",
       "reqIds": [
         "REQ-4"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Enhance visual attractiveness and add animations across the application (more engaging UI, animated transitions, animated components)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Add the provided logo to the website and rebrand the platform as 'Anurag University Student Feedback System' with animated logo and name integration across all pages (navbar, landing page, etc.)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Change website color scheme to red and white, coordinated with the Anurag University logo's red and navy blue design",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Add more features to the platform and fully enable/activate the instructor panel functionality",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Extend the backend to support instructor accounts: add an Instructor data type with fields (instructorId, name, email, department, password/pin), and expose CRUD operations to register, retrieve, update, and delete instructors. Store instructors in a persistent Map.",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Add backend support for instructor authentication: expose a verifyInstructor(instructorId, pin) query that returns a boolean indicating whether the credentials are valid. This allows the frontend to gate instructor panel access behind a simple login form.",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Add a backend function to record and retrieve instructor annotations/notes on student submissions: instructors can add a text note to any submissionId (instructorNote: Text), and the note is persisted and retrievable via getSubmissionNote(submissionId).",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "Add a backend function getSystemStats() that returns aggregate platform statistics: total number of students, total number of submissions, overall average score across all submissions, and top-performing student (highest average score). This powers a system-wide analytics view for instructors.",
+      "reqIds": [
+        "REQ-23"
       ],
       "status": "pending"
     }

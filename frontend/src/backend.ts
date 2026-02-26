@@ -94,6 +94,15 @@ export interface Student {
     name: string;
     course: string;
 }
+export type Pin = string;
+export interface Instructor {
+    pin: Pin;
+    name: string;
+    email: string;
+    instructorId: InstructorId;
+    department: string;
+}
+export type Time = bigint;
 export interface FeedbackSubmission {
     studentId: string;
     timestamp: Time;
@@ -101,8 +110,6 @@ export interface FeedbackSubmission {
     submissionId: SubmissionId;
     assignmentTitle: AssignmentTitle;
 }
-export type AssignmentTitle = string;
-export type Time = bigint;
 export interface GeneratedFeedback {
     suggestions: Array<Suggestion>;
     feedbackText: string;
@@ -110,26 +117,46 @@ export interface GeneratedFeedback {
     timestamp: Time;
     submissionId: SubmissionId;
 }
+export type AssignmentTitle = string;
 export interface Suggestion {
     text: string;
 }
+export interface SystemStats {
+    topStudent?: {
+        studentId: StudentId;
+        averageScore: bigint;
+    };
+    totalStudents: bigint;
+    totalSubmissions: bigint;
+    overallAverageScore: bigint;
+}
+export type InstructorId = bigint;
 export type StudentId = string;
 export type SubmissionId = bigint;
 export interface backendInterface {
     addStudent(studentId: StudentId, name: string, course: string): Promise<void>;
+    addSubmissionNote(submissionId: SubmissionId, note: string): Promise<void>;
     createSubmission(studentId: StudentId, assignmentTitle: AssignmentTitle, submissionText: string): Promise<SubmissionId>;
     generateFeedback(submissionId: SubmissionId): Promise<GeneratedFeedback>;
     getAllFeedbackForStudent(studentId: StudentId): Promise<Array<GeneratedFeedback>>;
+    getAllInstructors(): Promise<Array<Instructor>>;
     getAllStudents(): Promise<Array<Student>>;
     getAllSubmissionsByStudent(studentId: StudentId): Promise<Array<FeedbackSubmission>>;
     getFeedback(submissionId: SubmissionId): Promise<GeneratedFeedback>;
+    getInstructor(instructorId: InstructorId): Promise<Instructor>;
     getStudent(studentId: StudentId): Promise<Student>;
     getStudentStats(studentId: StudentId): Promise<{
         totalSubmissions: bigint;
         averageScore: bigint;
     }>;
     getSubmissionById(submissionId: SubmissionId): Promise<FeedbackSubmission>;
+    getSubmissionNote(submissionId: SubmissionId): Promise<string>;
+    getSystemStats(): Promise<SystemStats>;
+    registerInstructor(name: string, email: string, department: string, pin: Pin): Promise<InstructorId>;
+    updateInstructor(instructorId: InstructorId, name: string, email: string, department: string, pin: Pin): Promise<void>;
+    verifyInstructor(instructorId: InstructorId, pin: Pin): Promise<boolean>;
 }
+import type { StudentId as _StudentId, SystemStats as _SystemStats } from "./declarations/backend.did.d.ts";
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
     async addStudent(arg0: StudentId, arg1: string, arg2: string): Promise<void> {
@@ -143,6 +170,20 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.addStudent(arg0, arg1, arg2);
+            return result;
+        }
+    }
+    async addSubmissionNote(arg0: SubmissionId, arg1: string): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.addSubmissionNote(arg0, arg1);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.addSubmissionNote(arg0, arg1);
             return result;
         }
     }
@@ -188,6 +229,20 @@ export class Backend implements backendInterface {
             return result;
         }
     }
+    async getAllInstructors(): Promise<Array<Instructor>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getAllInstructors();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getAllInstructors();
+            return result;
+        }
+    }
     async getAllStudents(): Promise<Array<Student>> {
         if (this.processError) {
             try {
@@ -227,6 +282,20 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.getFeedback(arg0);
+            return result;
+        }
+    }
+    async getInstructor(arg0: InstructorId): Promise<Instructor> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getInstructor(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getInstructor(arg0);
             return result;
         }
     }
@@ -275,6 +344,112 @@ export class Backend implements backendInterface {
             return result;
         }
     }
+    async getSubmissionNote(arg0: SubmissionId): Promise<string> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getSubmissionNote(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getSubmissionNote(arg0);
+            return result;
+        }
+    }
+    async getSystemStats(): Promise<SystemStats> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getSystemStats();
+                return from_candid_SystemStats_n1(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getSystemStats();
+            return from_candid_SystemStats_n1(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async registerInstructor(arg0: string, arg1: string, arg2: string, arg3: Pin): Promise<InstructorId> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.registerInstructor(arg0, arg1, arg2, arg3);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.registerInstructor(arg0, arg1, arg2, arg3);
+            return result;
+        }
+    }
+    async updateInstructor(arg0: InstructorId, arg1: string, arg2: string, arg3: string, arg4: Pin): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.updateInstructor(arg0, arg1, arg2, arg3, arg4);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.updateInstructor(arg0, arg1, arg2, arg3, arg4);
+            return result;
+        }
+    }
+    async verifyInstructor(arg0: InstructorId, arg1: Pin): Promise<boolean> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.verifyInstructor(arg0, arg1);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.verifyInstructor(arg0, arg1);
+            return result;
+        }
+    }
+}
+function from_candid_SystemStats_n1(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _SystemStats): SystemStats {
+    return from_candid_record_n2(_uploadFile, _downloadFile, value);
+}
+function from_candid_opt_n3(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [{
+        studentId: _StudentId;
+        averageScore: bigint;
+    }]): {
+    studentId: StudentId;
+    averageScore: bigint;
+} | null {
+    return value.length === 0 ? null : value[0];
+}
+function from_candid_record_n2(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    topStudent: [] | [{
+            studentId: _StudentId;
+            averageScore: bigint;
+        }];
+    totalStudents: bigint;
+    totalSubmissions: bigint;
+    overallAverageScore: bigint;
+}): {
+    topStudent?: {
+        studentId: StudentId;
+        averageScore: bigint;
+    };
+    totalStudents: bigint;
+    totalSubmissions: bigint;
+    overallAverageScore: bigint;
+} {
+    return {
+        topStudent: record_opt_to_undefined(from_candid_opt_n3(_uploadFile, _downloadFile, value.topStudent)),
+        totalStudents: value.totalStudents,
+        totalSubmissions: value.totalSubmissions,
+        overallAverageScore: value.overallAverageScore
+    };
 }
 export interface CreateActorOptions {
     agent?: Agent;

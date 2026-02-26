@@ -1,228 +1,134 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-26T08:34:29.744Z",
+  "generatedAt": "2026-02-26T09:42:32.173Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 8,
+    "total": 10,
     "implemented": 6,
     "items": [
       {
-        "id": "REQ-1",
-        "summary": "Design and implement a cohesive visual theme for the application: use a clean academic aesthetic with warm amber and teal accents, modern sans-serif typography, card-based layouts, and subtle animations. Apply the theme consistently across all pages and components.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/tailwind.config.js",
-          "frontend/src/index.css"
-        ],
-        "matchedFiles": [
-          "frontend/tailwind.config.js",
-          "frontend/src/index.css"
-        ]
-      },
-      {
-        "id": "REQ-2",
-        "summary": "Create a backend data model and API to manage Students, Instructors, FeedbackSubmissions, and GeneratedFeedback. Store student profiles (name, studentId, course), submissions (studentId, assignmentTitle, submissionText, timestamp), and AI-generated feedback (submissionId, feedbackText, score, suggestions, timestamp). Expose CRUD operations for all entities.",
+        "id": "REQ-20",
+        "summary": "Extend the backend to support instructor accounts: add an Instructor data type with fields (instructorId, name, email, department, password/pin), and expose CRUD operations to register, retrieve, update, and delete instructors. Store instructors in a persistent Map.",
         "status": "unknown",
         "plannedFiles": [],
         "matchedFiles": []
       },
       {
-        "id": "REQ-3",
-        "summary": "Build a student feedback submission interface where students can enter their name and student ID, select or type an assignment title, write their submission text, and submit it for AI feedback. Show a loading state while feedback is being processed and display the returned feedback inline after submission.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/pages/StudentSubmission.tsx",
-          "frontend/src/components/FeedbackDisplay.tsx",
-          "frontend/src/App.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/StudentSubmission.tsx",
-          "frontend/src/components/FeedbackDisplay.tsx",
-          "frontend/src/App.tsx"
-        ]
-      },
-      {
-        "id": "REQ-4",
-        "summary": "Implement AI-powered feedback analysis in the backend: when a submission is received, generate structured feedback including an overall score (0–100), a qualitative feedback paragraph, and a list of 3–5 actionable improvement suggestions. Use rule-based heuristics (e.g., word count, keyword presence, structure detection) to simulate AI scoring since external AI APIs are not available.",
+        "id": "REQ-21",
+        "summary": "Add backend support for instructor authentication: expose a verifyInstructor(instructorId, pin) query that returns a boolean indicating whether the credentials are valid. This allows the frontend to gate instructor panel access behind a simple login form.",
         "status": "unknown",
         "plannedFiles": [],
         "matchedFiles": []
       },
       {
-        "id": "REQ-5",
-        "summary": "Build a student dashboard where students can enter their student ID to view all their past submissions and the corresponding AI-generated feedback. Each submission card should show the assignment title, submission date, score, feedback paragraph, and improvement suggestions.",
+        "id": "REQ-22",
+        "summary": "Add a backend function to record and retrieve instructor annotations/notes on student submissions: instructors can add a text note to any submissionId (instructorNote: Text), and the note is persisted and retrievable via getSubmissionNote(submissionId).",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-23",
+        "summary": "Add a backend function getSystemStats() that returns aggregate platform statistics: total number of students, total number of submissions, overall average score across all submissions, and top-performing student (highest average score). This powers a system-wide analytics view for instructors.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-24",
+        "summary": "Gate the Instructor Panel page (frontend/src/pages/InstructorPanel.tsx) behind a simple login form. On first load, show an Instructor Login card asking for Instructor ID and PIN. On successful verification (via the verifyInstructor backend call), reveal the full instructor panel. Add a Logout button that clears the session and returns to the login card.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/pages/StudentDashboard.tsx",
-          "frontend/src/components/SubmissionCard.tsx",
-          "frontend/src/App.tsx"
+          "frontend/src/pages/InstructorPanel.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/pages/StudentDashboard.tsx",
-          "frontend/src/components/SubmissionCard.tsx",
-          "frontend/src/App.tsx"
+          "frontend/src/pages/InstructorPanel.tsx"
         ]
       },
       {
-        "id": "REQ-6",
-        "summary": "Build an instructor/admin panel that lists all students and their submissions. Instructors can view any student's full feedback history, see aggregate stats (total submissions, average score across all students), and manually add or remove students from the system.",
+        "id": "REQ-25",
+        "summary": "Enhance the Instructor Panel with a System Analytics section that displays platform-wide stats fetched from getSystemStats(): total students enrolled, total submissions received, overall average score, and top-performing student. Render these as stat cards consistent with the au-red/au-navy brand palette.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/pages/InstructorPanel.tsx",
-          "frontend/src/components/StudentTable.tsx",
-          "frontend/src/components/AddStudentForm.tsx",
-          "frontend/src/App.tsx"
+          "frontend/src/pages/InstructorPanel.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/pages/InstructorPanel.tsx",
-          "frontend/src/components/StudentTable.tsx",
-          "frontend/src/components/AddStudentForm.tsx",
-          "frontend/src/App.tsx"
+          "frontend/src/pages/InstructorPanel.tsx"
         ]
       },
       {
-        "id": "REQ-7",
-        "summary": "Create a landing/home page that introduces the SmartFeedback platform, highlights key features (AI-powered analysis, instant feedback, progress tracking), and provides navigation buttons to the Student Submission page, Student Dashboard, and Instructor Panel.",
+        "id": "REQ-26",
+        "summary": "Add an Instructor Notes feature to the Instructor Panel: when viewing a student's submission detail, show a text area for the instructor to write and save a note on that submission. On save, call addInstructorNote; on load, call getSubmissionNote and pre-fill the text area. Show save confirmation with a toast notification.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/pages/Home.tsx",
-          "frontend/src/components/Navigation.tsx",
-          "frontend/src/components/FeatureCard.tsx",
-          "frontend/src/App.tsx"
+          "frontend/src/pages/InstructorPanel.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/pages/Home.tsx",
-          "frontend/src/components/Navigation.tsx",
-          "frontend/src/components/FeatureCard.tsx",
-          "frontend/src/App.tsx"
+          "frontend/src/pages/InstructorPanel.tsx"
         ]
       },
       {
-        "id": "REQ-8",
-        "summary": "Render the generated hero banner and feature icons as static assets from frontend/public/assets/generated.",
+        "id": "REQ-27",
+        "summary": "Add a Manage Instructors sub-section inside the Instructor Panel (visible only when logged in) that allows adding new instructor accounts (name, department, instructorId, PIN) and deleting existing ones. Display registered instructors in a table similar to the existing StudentTable component, using the same au-red/au-navy styling.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/pages/Home.tsx"
+          "frontend/src/components/InstructorTable.tsx",
+          "frontend/src/components/AddInstructorForm.tsx",
+          "frontend/src/pages/InstructorPanel.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/pages/Home.tsx"
+          "frontend/src/components/InstructorTable.tsx",
+          "frontend/src/components/AddInstructorForm.tsx",
+          "frontend/src/pages/InstructorPanel.tsx"
+        ]
+      },
+      {
+        "id": "REQ-28",
+        "summary": "Add React Query hooks in frontend/src/hooks/useQueries.ts for the new backend calls: useVerifyInstructor, useGetSystemStats, useAddInstructorNote, useGetSubmissionNote, useGetAllInstructors, useAddInstructor, and useDeleteInstructor. Follow the existing hook patterns in the file.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useQueries.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useQueries.ts"
+        ]
+      },
+      {
+        "id": "REQ-29",
+        "summary": "Add a 'Score Distribution' chart to the Instructor Panel using a simple CSS/Tailwind bar chart (no external charting library): display the count of submissions bucketed into score ranges (0–20, 21–40, 41–60, 61–80, 81–100). Fetch the data from existing getAllSubmissions or derive from student stats. Style bars in au-red with labels below each bar.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/ScoreDistributionChart.tsx",
+          "frontend/src/pages/InstructorPanel.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/ScoreDistributionChart.tsx",
+          "frontend/src/pages/InstructorPanel.tsx"
         ]
       }
     ]
   },
   "changedFiles": [
     "backend/main.mo",
+    "backend/migration.mo",
     "build-request.json",
-    "build-template/Dockerfile",
-    "build-template/LICENSE",
-    "build-template/README.md",
-    "build-template/deploy.sh",
-    "build-template/icp.yaml",
-    "build-template/package.json",
-    "build-template/pnpm-lock.yaml",
-    "build-template/pnpm-workspace.yaml",
-    "build-template/scripts/prune-unused-images.js",
-    "build-template/scripts/resize-images.js",
-    "build-template/src/backend/canister.yaml",
-    "build-template/src/backend/system-idl/aaaaa-aa.did",
-    "build-template/src/frontend/canister.yaml",
-    "build-template/src/frontend/components.json",
-    "build-template/src/frontend/env.json",
-    "build-template/src/frontend/eslint-rules/no-bigint-in-query-keys.js",
-    "build-template/src/frontend/eslint-rules/require-internet-identity-provider.js",
-    "build-template/src/frontend/eslint.config.js",
-    "build-template/src/frontend/package.json",
-    "build-template/src/frontend/postcss.config.js",
-    "build-template/src/frontend/src/components/ui/accordion.tsx",
-    "build-template/src/frontend/src/components/ui/alert-dialog.tsx",
-    "build-template/src/frontend/src/components/ui/alert.tsx",
-    "build-template/src/frontend/src/components/ui/aspect-ratio.tsx",
-    "build-template/src/frontend/src/components/ui/avatar.tsx",
-    "build-template/src/frontend/src/components/ui/badge.tsx",
-    "build-template/src/frontend/src/components/ui/breadcrumb.tsx",
-    "build-template/src/frontend/src/components/ui/button.tsx",
-    "build-template/src/frontend/src/components/ui/calendar.tsx",
-    "build-template/src/frontend/src/components/ui/card.tsx",
-    "build-template/src/frontend/src/components/ui/carousel.tsx",
-    "build-template/src/frontend/src/components/ui/chart.tsx",
-    "build-template/src/frontend/src/components/ui/checkbox.tsx",
-    "build-template/src/frontend/src/components/ui/collapsible.tsx",
-    "build-template/src/frontend/src/components/ui/command.tsx",
-    "build-template/src/frontend/src/components/ui/context-menu.tsx",
-    "build-template/src/frontend/src/components/ui/dialog.tsx",
-    "build-template/src/frontend/src/components/ui/drawer.tsx",
-    "build-template/src/frontend/src/components/ui/dropdown-menu.tsx",
-    "build-template/src/frontend/src/components/ui/form.tsx",
-    "build-template/src/frontend/src/components/ui/hover-card.tsx",
-    "build-template/src/frontend/src/components/ui/input-otp.tsx",
-    "build-template/src/frontend/src/components/ui/input.tsx",
-    "build-template/src/frontend/src/components/ui/label.tsx",
-    "build-template/src/frontend/src/components/ui/menubar.tsx",
-    "build-template/src/frontend/src/components/ui/navigation-menu.tsx",
-    "build-template/src/frontend/src/components/ui/pagination.tsx",
-    "build-template/src/frontend/src/components/ui/popover.tsx",
-    "build-template/src/frontend/src/components/ui/progress.tsx",
-    "build-template/src/frontend/src/components/ui/radio-group.tsx",
-    "build-template/src/frontend/src/components/ui/resizable.tsx",
-    "build-template/src/frontend/src/components/ui/scroll-area.tsx",
-    "build-template/src/frontend/src/components/ui/select.tsx",
-    "build-template/src/frontend/src/components/ui/separator.tsx",
-    "build-template/src/frontend/src/components/ui/sheet.tsx",
-    "build-template/src/frontend/src/components/ui/sidebar.tsx",
-    "build-template/src/frontend/src/components/ui/skeleton.tsx",
-    "build-template/src/frontend/src/components/ui/slider.tsx",
-    "build-template/src/frontend/src/components/ui/sonner.tsx",
-    "build-template/src/frontend/src/components/ui/switch.tsx",
-    "build-template/src/frontend/src/components/ui/table.tsx",
-    "build-template/src/frontend/src/components/ui/tabs.tsx",
-    "build-template/src/frontend/src/components/ui/textarea.tsx",
-    "build-template/src/frontend/src/components/ui/toggle-group.tsx",
-    "build-template/src/frontend/src/components/ui/toggle.tsx",
-    "build-template/src/frontend/src/components/ui/tooltip.tsx",
-    "build-template/src/frontend/src/hooks/use-mobile.tsx",
-    "build-template/src/frontend/src/lib/utils.ts",
-    "build-template/src/frontend/tsconfig.json",
-    "build-template/src/frontend/vite.config.js",
-    "build-template/tsconfig.json",
-    "caffeine.lock.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/index.css",
-    "frontend/index.html",
-    "frontend/public/assets/generated/hero-banner.dim_1200x400.png",
-    "frontend/public/assets/generated/icon-ai.dim_128x128.png",
-    "frontend/public/assets/generated/icon-progress.dim_128x128.png",
-    "frontend/public/assets/generated/icon-submit.dim_128x128.png",
-    "frontend/src/App.tsx",
     "frontend/src/backend.d.ts",
     "frontend/src/backend.ts",
-    "frontend/src/components/AddStudentForm.tsx",
-    "frontend/src/components/FeatureCard.tsx",
-    "frontend/src/components/FeedbackDisplay.tsx",
-    "frontend/src/components/Footer.tsx",
-    "frontend/src/components/Navigation.tsx",
-    "frontend/src/components/StudentTable.tsx",
+    "frontend/src/components/AddInstructorForm.tsx",
+    "frontend/src/components/InstructorTable.tsx",
+    "frontend/src/components/ScoreDistributionChart.tsx",
     "frontend/src/components/SubmissionCard.tsx",
-    "frontend/src/config.ts",
     "frontend/src/declarations/backend.did.d.ts",
     "frontend/src/declarations/backend.did.js",
-    "frontend/src/hooks/useActor.ts",
-    "frontend/src/hooks/useInternetIdentity.ts",
     "frontend/src/hooks/useQueries.ts",
-    "frontend/src/index.css",
-    "frontend/src/main.tsx",
-    "frontend/src/pages/Home.tsx",
     "frontend/src/pages/InstructorPanel.tsx",
-    "frontend/src/pages/StudentDashboard.tsx",
-    "frontend/src/pages/StudentSubmission.tsx",
-    "frontend/src/ui-summary.json",
-    "frontend/src/utils/StorageClient.ts",
-    "frontend/tailwind.config.js",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

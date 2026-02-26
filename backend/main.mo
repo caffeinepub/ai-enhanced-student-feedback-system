@@ -8,10 +8,13 @@ import Time "mo:core/Time";
 import Order "mo:core/Order";
 import Runtime "mo:core/Runtime";
 import Iter "mo:core/Iter";
-import Principal "mo:core/Principal";
 
+import Migration "migration";
+
+// Use migration for persistent state changes
+(with migration = Migration.run)
 actor {
-  // Data Types
+  // Existing Types
   type StudentId = Text;
   type SubmissionId = Nat;
   type AssignmentTitle = Text;
@@ -42,6 +45,28 @@ actor {
     timestamp : Time.Time;
   };
 
+  // New Types for Instructor Support
+  type InstructorId = Nat;
+  type Pin = Text;
+
+  type Instructor = {
+    instructorId : InstructorId;
+    name : Text;
+    email : Text;
+    department : Text;
+    pin : Pin;
+  };
+
+  type SystemStats = {
+    totalStudents : Nat;
+    totalSubmissions : Nat;
+    overallAverageScore : Int;
+    topStudent : ?{
+      studentId : StudentId;
+      averageScore : Int;
+    };
+  };
+
   // Persistence
   let students = Map.empty<StudentId, Student>();
   let nextSubmissionId = Set.empty<Nat>();
@@ -50,6 +75,11 @@ actor {
   let submissionsByStudent = Map.empty<StudentId, Set.Set<SubmissionId>>();
 
   let feedbacks = Map.empty<SubmissionId, GeneratedFeedback>();
+
+  let instructors = Map.empty<InstructorId, Instructor>();
+  var nextInstructorId : InstructorId = 1;
+
+  let submissionNotes = Map.empty<SubmissionId, Text>();
 
   module Student {
     public func compare(s1 : Student, s2 : Student) : Order.Order {
@@ -74,8 +104,7 @@ actor {
   };
 
   public query ({ caller }) func getAllStudents() : async [Student] {
-    let iter = students.values();
-    iter.toArray().sort();
+    students.values().toArray();
   };
 
   // Submission Management
@@ -263,6 +292,139 @@ actor {
 
         { totalSubmissions; averageScore };
       };
+    };
+  };
+
+  // === Instructor Management ===
+
+  public shared ({ caller }) func registerInstructor(name : Text, email : Text, department : Text, pin : Pin) : async InstructorId {
+    let instructorId = nextInstructorId;
+    nextInstructorId += 1;
+
+    let instructor : Instructor = {
+      instructorId;
+      name;
+      email;
+      department;
+      pin;
+    };
+
+    instructors.add(instructorId, instructor);
+    instructorId;
+  };
+
+  public query ({ caller }) func verifyInstructor(instructorId : InstructorId, pin : Pin) : async Bool {
+    switch (instructors.get(instructorId)) {
+      case (null) { false };
+      case (?instructor) { instructor.pin == pin };
+    };
+  };
+
+  public query ({ caller }) func getInstructor(instructorId : InstructorId) : async Instructor {
+    switch (instructors.get(instructorId)) {
+      case (null) { Runtime.trap("Instructor not found") };
+      case (?instructor) { instructor };
+    };
+  };
+
+  public shared ({ caller }) func updateInstructor(
+    instructorId : InstructorId,
+    name : Text,
+    email : Text,
+    department : Text,
+    pin : Pin,
+  ) : async () {
+    switch (instructors.get(instructorId)) {
+      case (null) { Runtime.trap("Instructor not found") };
+      case (?_) {
+        let updatedInstructor : Instructor = {
+          instructorId;
+          name;
+          email;
+          department;
+          pin;
+        };
+        instructors.add(instructorId, updatedInstructor);
+      };
+    };
+  };
+
+  public query ({ caller }) func getAllInstructors() : async [Instructor] {
+    instructors.values().toArray();
+  };
+
+  // Submission Notes
+  public shared ({ caller }) func addSubmissionNote(submissionId : SubmissionId, note : Text) : async () {
+    if (not submissionsById.containsKey(submissionId)) {
+      Runtime.trap("Submission does not exist");
+    };
+    submissionNotes.add(submissionId, note);
+  };
+
+  public query ({ caller }) func getSubmissionNote(submissionId : SubmissionId) : async Text {
+    switch (submissionNotes.get(submissionId)) {
+      case (null) { Runtime.trap("No note found for this submission") };
+      case (?note) { note };
+    };
+  };
+
+  // System Stats
+  public query ({ caller }) func getSystemStats() : async SystemStats {
+    let totalStudents = students.size();
+    let totalSubmissions = submissionsById.size();
+
+    var totalScore = 0;
+    var count = 0;
+
+    let studentScores = Map.empty<StudentId, Int>();
+
+    let feedbacksIter = feedbacks.values();
+    feedbacksIter.forEach(
+      func(feedback) {
+        totalScore += feedback.score;
+        count += 1;
+
+        switch (studentScores.get(feedback.submissionId.toText())) {
+          case (null) {
+            studentScores.add(feedback.submissionId.toText(), feedback.score);
+          };
+          case (?curr) {
+            studentScores.add(feedback.submissionId.toText(), curr + feedback.score);
+          };
+        };
+      }
+    );
+
+    let overallAverageScore = if (count > 0) {
+      totalScore / count;
+    } else { 0 };
+
+    var topStudent : ?{
+      studentId : StudentId;
+      averageScore : Int;
+    } = null;
+
+    let studentEntriesIter = studentScores.entries();
+    studentEntriesIter.forEach(
+      func((studentId, score)) {
+        switch (topStudent) {
+          case (null) {
+            topStudent := ?{ studentId; averageScore = score };
+          };
+          case (?currentTop) {
+            if (score > currentTop.averageScore) {
+              topStudent := ?{ studentId; averageScore = score };
+            };
+          };
+        };
+      }
+    );
+
+    {
+      totalStudents;
+      totalSubmissions;
+      overallAverageScore;
+      topStudent;
     };
   };
 };

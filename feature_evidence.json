@@ -2,71 +2,9 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-design-and-implement-a-cohesive-visual-theme-for-the-application-use-a-clean-academic-aesthetic-with-warm-amber-and-teal-accents-modern-sans-serif-typography-card-based-layouts-and-subtle-animations-apply-the-theme-consistently-across-all-pages-and-components",
-      "featureTitle": "Design and implement a cohesive visual theme for the application: use a clean academic aesthetic with warm amber and teal accents, modern sans-serif typography, card-based layouts, and subtle animations. Apply the theme consistently across all pages and components.",
+      "featureId": "feature-gate-the-instructor-panel-page-frontend-src-pages-instructorpanel-tsx-behind-a-simple-login-form-on-first-load-show-an-instructor-login-card-asking-for-instructor-id-and-pin-on-successful-verification-via-the-verifyinstructor-backend-call-reveal-the-full-instructor-panel-add-a-logout-button-that-clears-the-session-and-returns-to-the-login-card",
+      "featureTitle": "Gate the Instructor Panel page (frontend/src/pages/InstructorPanel.tsx) behind a simple login form. On first load, show an Instructor Login card asking for Instructor ID and PIN. On successful verification (via the verifyInstructor backend call), reveal the full instructor panel. Add a Logout button that clears the session and returns to the login card.",
       "files": [
-        "frontend/src/index.css",
-        "frontend/tailwind.config.js"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-1"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-build-a-student-feedback-submission-interface-where-students-can-enter-their-name-and-student-id-select-or-type-an-assignment-title-write-their-submission-text-and-submit-it-for-ai-feedback-show-a-loading-state-while-feedback-is-being-processed-and-display-the-returned-feedback-inline-after-submission",
-      "featureTitle": "Build a student feedback submission interface where students can enter their name and student ID, select or type an assignment title, write their submission text, and submit it for AI feedback. Show a loading state while feedback is being processed and display the returned feedback inline after submission.",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/FeedbackDisplay.tsx",
-        "frontend/src/pages/StudentSubmission.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-3"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-build-a-student-dashboard-where-students-can-enter-their-student-id-to-view-all-their-past-submissions-and-the-corresponding-ai-generated-feedback-each-submission-card-should-show-the-assignment-title-submission-date-score-feedback-paragraph-and-improvement-suggestions",
-      "featureTitle": "Build a student dashboard where students can enter their student ID to view all their past submissions and the corresponding AI-generated feedback. Each submission card should show the assignment title, submission date, score, feedback paragraph, and improvement suggestions.",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/SubmissionCard.tsx",
-        "frontend/src/pages/StudentDashboard.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-5"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-build-an-instructor-admin-panel-that-lists-all-students-and-their-submissions-instructors-can-view-any-student-s-full-feedback-history-see-aggregate-stats-total-submissions-average-score-across-all-students-and-manually-add-or-remove-students-from-the-system",
-      "featureTitle": "Build an instructor/admin panel that lists all students and their submissions. Instructors can view any student's full feedback history, see aggregate stats (total submissions, average score across all students), and manually add or remove students from the system.",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/AddStudentForm.tsx",
-        "frontend/src/components/StudentTable.tsx",
         "frontend/src/pages/InstructorPanel.tsx"
       ],
       "components": [
@@ -77,18 +15,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-6"
+        "REQ-24"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-create-a-landing-home-page-that-introduces-the-smartfeedback-platform-highlights-key-features-ai-powered-analysis-instant-feedback-progress-tracking-and-provides-navigation-buttons-to-the-student-submission-page-student-dashboard-and-instructor-panel",
-      "featureTitle": "Create a landing/home page that introduces the SmartFeedback platform, highlights key features (AI-powered analysis, instant feedback, progress tracking), and provides navigation buttons to the Student Submission page, Student Dashboard, and Instructor Panel.",
+      "featureId": "feature-enhance-the-instructor-panel-with-a-system-analytics-section-that-displays-platform-wide-stats-fetched-from-getsystemstats-total-students-enrolled-total-submissions-received-overall-average-score-and-top-performing-student-render-these-as-stat-cards-consistent-with-the-au-red-au-navy-brand-palette",
+      "featureTitle": "Enhance the Instructor Panel with a System Analytics section that displays platform-wide stats fetched from getSystemStats(): total students enrolled, total submissions received, overall average score, and top-performing student. Render these as stat cards consistent with the au-red/au-navy brand palette.",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/FeatureCard.tsx",
-        "frontend/src/components/Navigation.tsx",
-        "frontend/src/pages/Home.tsx"
+        "frontend/src/pages/InstructorPanel.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -98,15 +33,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-7"
+        "REQ-25"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-render-the-generated-hero-banner-and-feature-icons-as-static-assets-from-frontend-public-assets-generated",
-      "featureTitle": "Render the generated hero banner and feature icons as static assets from frontend/public/assets/generated.",
+      "featureId": "feature-add-an-instructor-notes-feature-to-the-instructor-panel-when-viewing-a-student-s-submission-detail-show-a-text-area-for-the-instructor-to-write-and-save-a-note-on-that-submission-on-save-call-addinstructornote-on-load-call-getsubmissionnote-and-pre-fill-the-text-area-show-save-confirmation-with-a-toast-notification",
+      "featureTitle": "Add an Instructor Notes feature to the Instructor Panel: when viewing a student's submission detail, show a text area for the instructor to write and save a note on that submission. On save, call addInstructorNote; on load, call getSubmissionNote and pre-fill the text area. Show save confirmation with a toast notification.",
       "files": [
-        "frontend/src/pages/Home.tsx"
+        "frontend/src/pages/InstructorPanel.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -116,7 +51,64 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-8"
+        "REQ-26"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-manage-instructors-sub-section-inside-the-instructor-panel-visible-only-when-logged-in-that-allows-adding-new-instructor-accounts-name-department-instructorid-pin-and-deleting-existing-ones-display-registered-instructors-in-a-table-similar-to-the-existing-studenttable-component-using-the-same-au-red-au-navy-styling",
+      "featureTitle": "Add a Manage Instructors sub-section inside the Instructor Panel (visible only when logged in) that allows adding new instructor accounts (name, department, instructorId, PIN) and deleting existing ones. Display registered instructors in a table similar to the existing StudentTable component, using the same au-red/au-navy styling.",
+      "files": [
+        "frontend/src/components/AddInstructorForm.tsx",
+        "frontend/src/components/InstructorTable.tsx",
+        "frontend/src/pages/InstructorPanel.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-27"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-react-query-hooks-in-frontend-src-hooks-usequeries-ts-for-the-new-backend-calls-useverifyinstructor-usegetsystemstats-useaddinstructornote-usegetsubmissionnote-usegetallinstructors-useaddinstructor-and-usedeleteinstructor-follow-the-existing-hook-patterns-in-the-file",
+      "featureTitle": "Add React Query hooks in frontend/src/hooks/useQueries.ts for the new backend calls: useVerifyInstructor, useGetSystemStats, useAddInstructorNote, useGetSubmissionNote, useGetAllInstructors, useAddInstructor, and useDeleteInstructor. Follow the existing hook patterns in the file.",
+      "files": [
+        "frontend/src/hooks/useQueries.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-28"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-score-distribution-chart-to-the-instructor-panel-using-a-simple-css-tailwind-bar-chart-no-external-charting-library-display-the-count-of-submissions-bucketed-into-score-ranges-0-20-21-40-41-60-61-80-81-100-fetch-the-data-from-existing-getallsubmissions-or-derive-from-student-stats-style-bars-in-au-red-with-labels-below-each-bar",
+      "featureTitle": "Add a 'Score Distribution' chart to the Instructor Panel using a simple CSS/Tailwind bar chart (no external charting library): display the count of submissions bucketed into score ranges (0–20, 21–40, 41–60, 61–80, 81–100). Fetch the data from existing getAllSubmissions or derive from student stats. Style bars in au-red with labels below each bar.",
+      "files": [
+        "frontend/src/components/ScoreDistributionChart.tsx",
+        "frontend/src/pages/InstructorPanel.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-29"
       ],
       "confidence": "high"
     }

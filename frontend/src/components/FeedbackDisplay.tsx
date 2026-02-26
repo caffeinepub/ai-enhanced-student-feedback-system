@@ -1,79 +1,92 @@
-import type { GeneratedFeedback } from '../backend';
-import { CheckCircle2, Lightbulb, Star } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { GeneratedFeedback } from "@/backend";
+import { CheckCircle, AlertCircle, Lightbulb, Star } from "lucide-react";
 
 interface FeedbackDisplayProps {
   feedback: GeneratedFeedback;
 }
 
-function ScoreBadge({ score }: { score: number }) {
-  const scoreClass =
-    score >= 85 ? 'score-badge-high' : score >= 70 ? 'score-badge-mid' : 'score-badge-low';
+function getScoreColor(score: number): string {
+  if (score >= 85) return "bg-au-red text-white";
+  if (score >= 70) return "bg-orange-500 text-white";
+  return "bg-red-800 text-white";
+}
 
-  const label =
-    score >= 85 ? 'Excellent' : score >= 70 ? 'Good' : score >= 50 ? 'Needs Work' : 'Insufficient';
-
-  return (
-    <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${scoreClass} shadow-sm`}>
-      <Star className="h-4 w-4 fill-white/80 text-white" />
-      <span className="font-display font-bold text-lg">{score}</span>
-      <span className="text-sm font-medium opacity-90">/100 · {label}</span>
-    </div>
-  );
+function getScoreLabel(score: number): string {
+  if (score >= 85) return "Excellent";
+  if (score >= 70) return "Good";
+  if (score >= 50) return "Needs Work";
+  return "Poor";
 }
 
 export default function FeedbackDisplay({ feedback }: FeedbackDisplayProps) {
   const score = Number(feedback.score);
 
   return (
-    <div className="animate-fade-in space-y-4">
-      {/* Score */}
-      <Card className="border-0 shadow-card bg-gradient-to-br from-card to-muted/30">
-        <CardHeader className="pb-3">
-          <CardTitle className="font-display text-xs text-muted-foreground uppercase tracking-wide font-semibold">
-            AI Score
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ScoreBadge score={score} />
-        </CardContent>
-      </Card>
-
-      {/* Feedback Text */}
-      <Card className="border-0 shadow-card">
-        <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-sm font-semibold text-foreground">
-            <CheckCircle2 className="h-4 w-4 text-teal" />
-            Feedback
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-foreground leading-relaxed">{feedback.feedbackText}</p>
-        </CardContent>
-      </Card>
+    <div className="space-y-4">
+      {/* Score card */}
+      <div
+        className="feedback-slide flex items-center gap-4 p-5 rounded-xl border border-red-100 bg-white shadow-sm"
+        style={{ animationDelay: "0ms" }}
+      >
+        <div
+          className={`score-badge-animate flex-shrink-0 w-16 h-16 rounded-full flex flex-col items-center justify-center font-bold shadow-md ${getScoreColor(score)}`}
+        >
+          <span className="text-xl leading-none">{score}</span>
+          <span className="text-[9px] uppercase tracking-wide opacity-80">pts</span>
+        </div>
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <Star size={14} className="text-au-red fill-au-red" />
+            <span className="text-sm font-semibold text-au-navy">
+              Score: {getScoreLabel(score)}
+            </span>
+          </div>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            {feedback.feedbackText}
+          </p>
+        </div>
+      </div>
 
       {/* Suggestions */}
       {feedback.suggestions.length > 0 && (
-        <Card className="border-0 shadow-card">
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-sm font-semibold text-foreground">
-              <Lightbulb className="h-4 w-4 text-primary" />
-              Improvement Suggestions
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-2.5">
-              {feedback.suggestions.map((s, i) => (
-                <li key={i} className="flex items-start gap-3">
-                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary text-xs font-bold">
-                    {i + 1}
-                  </span>
-                  <span className="text-sm text-foreground leading-relaxed">{s.text}</span>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
+        <div
+          className="feedback-slide p-5 rounded-xl border border-red-100 bg-red-50/50"
+          style={{ animationDelay: "120ms" }}
+        >
+          <div className="flex items-center gap-2 mb-3">
+            <Lightbulb size={16} className="text-au-red" />
+            <h4 className="text-sm font-semibold text-au-navy">
+              Suggestions for Improvement
+            </h4>
+          </div>
+          <ul className="space-y-2">
+            {feedback.suggestions.map((s, i) => (
+              <li
+                key={i}
+                className="feedback-slide flex items-start gap-2 text-sm text-foreground"
+                style={{ animationDelay: `${(i + 2) * 80}ms` }}
+              >
+                <CheckCircle
+                  size={14}
+                  className="text-au-red mt-0.5 flex-shrink-0"
+                />
+                <span>{s.text}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {feedback.suggestions.length === 0 && (
+        <div
+          className="feedback-slide flex items-center gap-3 p-4 rounded-xl border border-red-100 bg-red-50/30"
+          style={{ animationDelay: "120ms" }}
+        >
+          <AlertCircle size={16} className="text-au-red" />
+          <p className="text-sm text-au-navy font-medium">
+            Outstanding work — no additional suggestions needed!
+          </p>
+        </div>
       )}
     </div>
   );

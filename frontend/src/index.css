@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,145 +6,194 @@
 
 @layer base {
   :root {
-    --radius: 0.75rem;
+    /* Red & White palette — Anurag University brand */
+    --background: oklch(0.99 0.002 0);
+    --foreground: oklch(0.18 0.04 260);
 
-    /* Warm Amber + Teal palette */
-    --background: 0.98 0.005 80;
-    --foreground: 0.18 0.025 250;
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.18 0.04 260);
 
-    --card: 1 0 0;
-    --card-foreground: 0.18 0.025 250;
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.18 0.04 260);
 
-    --popover: 1 0 0;
-    --popover-foreground: 0.18 0.025 250;
+    /* University Red: #C8102E → oklch(0.45 0.22 22) */
+    --primary: oklch(0.45 0.22 22);
+    --primary-foreground: oklch(1 0 0);
 
-    /* Amber primary */
-    --primary: 0.72 0.16 55;
-    --primary-foreground: 1 0 0;
+    --secondary: oklch(0.94 0.01 260);
+    --secondary-foreground: oklch(0.18 0.04 260);
 
-    /* Teal secondary */
-    --secondary: 0.94 0.04 195;
-    --secondary-foreground: 0.22 0.06 195;
+    --muted: oklch(0.96 0.005 260);
+    --muted-foreground: oklch(0.50 0.03 260);
 
-    --muted: 0.95 0.01 80;
-    --muted-foreground: 0.52 0.02 250;
+    /* Accent: lighter red tint */
+    --accent: oklch(0.95 0.03 22);
+    --accent-foreground: oklch(0.45 0.22 22);
 
-    /* Teal accent */
-    --accent: 0.88 0.08 195;
-    --accent-foreground: 0.22 0.06 195;
+    --destructive: oklch(0.45 0.22 22);
+    --destructive-foreground: oklch(1 0 0);
 
-    --destructive: 0.577 0.245 27.325;
-    --destructive-foreground: 0.985 0 0;
+    --border: oklch(0.90 0.01 260);
+    --input: oklch(0.90 0.01 260);
+    --ring: oklch(0.45 0.22 22);
 
-    --border: 0.9 0.015 80;
-    --input: 0.9 0.015 80;
-    --ring: 0.72 0.16 55;
+    --radius: 0.5rem;
 
-    --chart-1: 0.72 0.16 55;
-    --chart-2: 0.6 0.14 195;
-    --chart-3: 0.55 0.18 145;
-    --chart-4: 0.65 0.2 30;
-    --chart-5: 0.5 0.15 280;
-
-    --sidebar: 0.97 0.01 80;
-    --sidebar-foreground: 0.18 0.025 250;
-    --sidebar-primary: 0.72 0.16 55;
-    --sidebar-primary-foreground: 1 0 0;
-    --sidebar-accent: 0.88 0.08 195;
-    --sidebar-accent-foreground: 0.22 0.06 195;
-    --sidebar-border: 0.9 0.015 80;
-    --sidebar-ring: 0.72 0.16 55;
-
-    /* Custom tokens */
-    --amber: 0.72 0.16 55;
-    --amber-light: 0.92 0.08 80;
-    --amber-dark: 0.55 0.18 50;
-    --teal: 0.6 0.14 195;
-    --teal-light: 0.88 0.08 195;
-    --teal-dark: 0.42 0.12 195;
+    /* Anurag University brand tokens */
+    --au-red: oklch(0.45 0.22 22);
+    --au-navy: oklch(0.22 0.07 260);
+    --au-red-light: oklch(0.92 0.04 22);
+    --au-red-dark: oklch(0.35 0.20 22);
   }
 
   .dark {
-    --background: 0.14 0.02 250;
-    --foreground: 0.95 0.01 80;
+    --background: oklch(0.12 0.02 260);
+    --foreground: oklch(0.96 0.005 0);
 
-    --card: 0.18 0.025 250;
-    --card-foreground: 0.95 0.01 80;
+    --card: oklch(0.16 0.025 260);
+    --card-foreground: oklch(0.96 0.005 0);
 
-    --popover: 0.22 0.03 250;
-    --popover-foreground: 0.95 0.01 80;
+    --popover: oklch(0.16 0.025 260);
+    --popover-foreground: oklch(0.96 0.005 0);
 
-    --primary: 0.78 0.16 55;
-    --primary-foreground: 0.12 0.02 250;
+    --primary: oklch(0.55 0.22 22);
+    --primary-foreground: oklch(1 0 0);
 
-    --secondary: 0.25 0.04 195;
-    --secondary-foreground: 0.88 0.08 195;
+    --secondary: oklch(0.22 0.03 260);
+    --secondary-foreground: oklch(0.96 0.005 0);
 
-    --muted: 0.22 0.02 250;
-    --muted-foreground: 0.65 0.02 250;
+    --muted: oklch(0.22 0.03 260);
+    --muted-foreground: oklch(0.65 0.02 260);
 
-    --accent: 0.28 0.06 195;
-    --accent-foreground: 0.88 0.08 195;
+    --accent: oklch(0.28 0.06 22);
+    --accent-foreground: oklch(0.75 0.15 22);
 
-    --destructive: 0.704 0.191 22.216;
-    --destructive-foreground: 0.985 0 0;
+    --destructive: oklch(0.55 0.22 22);
+    --destructive-foreground: oklch(1 0 0);
 
-    --border: 1 0 0 / 10%;
-    --input: 1 0 0 / 15%;
-    --ring: 0.78 0.16 55;
+    --border: oklch(0.28 0.03 260);
+    --input: oklch(0.28 0.03 260);
+    --ring: oklch(0.55 0.22 22);
 
-    --sidebar: 0.18 0.025 250;
-    --sidebar-foreground: 0.95 0.01 80;
-    --sidebar-primary: 0.78 0.16 55;
-    --sidebar-primary-foreground: 0.12 0.02 250;
-    --sidebar-accent: 0.28 0.06 195;
-    --sidebar-accent-foreground: 0.88 0.08 195;
-    --sidebar-border: 1 0 0 / 10%;
-    --sidebar-ring: 0.78 0.16 55;
+    --au-red: oklch(0.55 0.22 22);
+    --au-navy: oklch(0.75 0.05 260);
+    --au-red-light: oklch(0.28 0.06 22);
+    --au-red-dark: oklch(0.65 0.20 22);
   }
+}
 
+@layer base {
   * {
     @apply border-border;
   }
-
   body {
-    @apply bg-background text-foreground font-sans antialiased;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-display;
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
   }
 }
 
-@layer components {
-  .gradient-amber-teal {
-    background: linear-gradient(135deg, oklch(var(--amber)) 0%, oklch(var(--teal)) 100%);
-  }
+/* ── Anurag University brand utilities ── */
+.text-au-red   { color: var(--au-red); }
+.text-au-navy  { color: var(--au-navy); }
+.bg-au-red     { background-color: var(--au-red); }
+.bg-au-navy    { background-color: var(--au-navy); }
+.border-au-red { border-color: var(--au-red); }
 
-  .gradient-amber {
-    background: linear-gradient(135deg, oklch(0.78 0.18 60) 0%, oklch(0.65 0.2 45) 100%);
-  }
-
-  .gradient-teal {
-    background: linear-gradient(135deg, oklch(0.65 0.15 195) 0%, oklch(0.48 0.14 210) 100%);
-  }
-
-  .card-hover {
-    @apply transition-all duration-200 hover:shadow-card-hover hover:-translate-y-0.5;
-  }
-
-  .score-badge-high {
-    background: linear-gradient(135deg, oklch(0.72 0.16 145) 0%, oklch(0.6 0.14 165) 100%);
-    @apply text-white;
-  }
-
-  .score-badge-mid {
-    background: linear-gradient(135deg, oklch(0.72 0.16 55) 0%, oklch(0.65 0.2 45) 100%);
-    @apply text-white;
-  }
-
-  .score-badge-low {
-    background: linear-gradient(135deg, oklch(0.65 0.22 30) 0%, oklch(0.55 0.2 20) 100%);
-    @apply text-white;
-  }
+/* ── Logo animations ── */
+@keyframes logoEnter {
+  0%   { opacity: 0; transform: scale(0.6) rotate(-10deg); }
+  60%  { opacity: 1; transform: scale(1.08) rotate(2deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
 }
+
+@keyframes logoTextEnter {
+  0%   { opacity: 0; transform: translateX(-20px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes logoPulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.04); }
+}
+
+@keyframes logoGlow {
+  0%, 100% { box-shadow: 0 0 0 0 oklch(0.45 0.22 22 / 0); }
+  50%       { box-shadow: 0 0 18px 6px oklch(0.45 0.22 22 / 0.35); }
+}
+
+.logo-enter      { animation: logoEnter 0.8s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+.logo-text-enter { animation: logoTextEnter 0.6s ease forwards; }
+.logo-pulse      { animation: logoPulse 3s ease-in-out infinite; }
+.logo-glow       { animation: logoGlow 3s ease-in-out infinite; }
+
+/* ── Page transition ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up { animation: fadeUp 0.45s ease forwards; }
+
+/* ── Feedback slide ── */
+@keyframes feedbackSlide {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.feedback-slide { animation: feedbackSlide 0.5s ease forwards; }
+
+/* ── Score badge pop ── */
+@keyframes scoreBadgePop {
+  0%   { transform: scale(0.5); opacity: 0; }
+  70%  { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.score-badge-animate { animation: scoreBadgePop 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+
+/* ── Stat counter ── */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-count-up { animation: countUp 0.6s ease forwards; }
+
+/* ── Feature card entrance ── */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-feature-card { animation: fadeSlideUp 0.6s ease forwards; }
+
+/* ── Submission card slide ── */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-up { animation: slideUp 0.4s ease forwards; }
+
+/* ── Skeleton shimmer ── */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    oklch(0.93 0.005 260) 25%,
+    oklch(0.97 0.002 260) 50%,
+    oklch(0.93 0.005 260) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* ── AI loading rings ── */
+@keyframes pingRing {
+  0%   { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+.animate-ping-ring { animation: pingRing 1.4s ease-out infinite; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar       { width: 6px; }
+::-webkit-scrollbar-track { background: oklch(0.96 0.005 260); }
+::-webkit-scrollbar-thumb { background: oklch(0.45 0.22 22); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: oklch(0.35 0.20 22); }

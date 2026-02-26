@@ -1,4 +1,4 @@
-import { RouterProvider, createRouter, createRoute, createRootRoute, Outlet } from '@tanstack/react-router';
+import { RouterProvider, createRouter, createRoute, createRootRoute, Outlet, useRouterState } from '@tanstack/react-router';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -6,13 +6,45 @@ import StudentSubmission from './pages/StudentSubmission';
 import StudentDashboard from './pages/StudentDashboard';
 import InstructorPanel from './pages/InstructorPanel';
 import { Toaster } from '@/components/ui/sonner';
+import { useEffect, useRef, useState } from 'react';
+
+// Animated page wrapper that fades/slides in on route change
+function AnimatedPage({ children }: { children: React.ReactNode }) {
+  const routerState = useRouterState();
+  const pathname = routerState.location.pathname;
+  const [key, setKey] = useState(pathname);
+  const [animating, setAnimating] = useState(false);
+  const prevPath = useRef(pathname);
+
+  useEffect(() => {
+    if (prevPath.current !== pathname) {
+      prevPath.current = pathname;
+      setKey(pathname);
+      setAnimating(true);
+      const t = setTimeout(() => setAnimating(false), 350);
+      return () => clearTimeout(t);
+    }
+  }, [pathname]);
+
+  return (
+    <div
+      key={key}
+      className={animating ? 'animate-page-enter' : 'animate-fade-in'}
+      style={{ animationFillMode: 'both' }}
+    >
+      {children}
+    </div>
+  );
+}
 
 // Layout component with Navigation + Footer
 function Layout() {
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Navigation />
-      <Outlet />
+      <AnimatedPage>
+        <Outlet />
+      </AnimatedPage>
       <Footer />
     </div>
   );

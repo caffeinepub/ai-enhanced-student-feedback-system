@@ -1,100 +1,125 @@
-import { useState } from 'react';
-import { Link, useLocation } from '@tanstack/react-router';
-import { Brain, Menu, X, GraduationCap } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "@tanstack/react-router";
+import { Menu, X, GraduationCap } from "lucide-react";
 
 const navLinks = [
-  { label: 'Home', path: '/' },
-  { label: 'Submit', path: '/submit' },
-  { label: 'My Dashboard', path: '/dashboard' },
-  { label: 'Instructor Panel', path: '/admin' },
+  { label: "Home",        to: "/" },
+  { label: "Submit",      to: "/submit" },
+  { label: "Dashboard",   to: "/dashboard" },
+  { label: "Instructor",  to: "/instructor" },
 ];
 
 export default function Navigation() {
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [menuOpen, setMenuOpen]   = useState(false);
+  const [scrolled, setScrolled]   = useState(false);
+  const [logoReady, setLogoReady] = useState(false);
   const location = useLocation();
 
-  const isActive = (path: string) => location.pathname === path;
+  useEffect(() => {
+    const timer = setTimeout(() => setLogoReady(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-card/80 backdrop-blur-md shadow-xs">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2.5 group">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl gradient-amber-teal shadow-sm group-hover:shadow-glow transition-shadow duration-300">
-            <Brain className="h-5 w-5 text-white" />
-          </div>
-          <span className="font-display font-bold text-lg text-foreground">
-            Smart<span className="text-primary">Feedback</span>
-          </span>
-        </Link>
-
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-1">
-          {navLinks.map((link) => (
-            <Link
-              key={link.path}
-              to={link.path}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-150 ${
-                isActive(link.path)
-                  ? 'bg-primary/10 text-primary font-semibold'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-white/95 backdrop-blur-md shadow-md border-b border-red-100"
+          : "bg-white/90 backdrop-blur-sm border-b border-red-50"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Brand */}
+          <Link to="/" className="flex items-center gap-3 group">
+            <div
+              className={`relative transition-all duration-700 ${
+                logoReady ? "opacity-100 scale-100" : "opacity-0 scale-75"
               }`}
             >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+              <div className="absolute inset-0 rounded-full animate-logo-glow pointer-events-none" />
+              <img
+                src="/assets/generated/anuragu-logo.dim_256x256.png"
+                alt="Anurag University"
+                className="h-10 w-10 object-contain rounded-full animate-logo-pulse drop-shadow-sm"
+              />
+            </div>
 
-        {/* CTA */}
-        <div className="hidden md:flex items-center gap-3">
-          <Link to="/submit">
-            <Button size="sm" className="gradient-amber-teal text-white border-0 hover:opacity-90 shadow-sm font-semibold">
-              <GraduationCap className="h-4 w-4 mr-1.5" />
-              Submit Work
-            </Button>
+            <div
+              className={`transition-all duration-500 delay-200 ${
+                logoReady ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
+              }`}
+            >
+              <p className="text-xs font-bold tracking-widest uppercase text-au-red leading-none">
+                ANURAG UNIVERSITY
+              </p>
+              <p className="text-[10px] font-medium tracking-wide text-au-navy leading-tight mt-0.5">
+                Student Feedback System
+              </p>
+            </div>
           </Link>
-        </div>
 
-        {/* Mobile toggle */}
-        <button
-          className="md:hidden p-2 rounded-lg hover:bg-muted transition-colors"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
-        >
-          {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+          {/* Desktop links */}
+          <div className="hidden md:flex items-center gap-1">
+            {navLinks.map((link) => {
+              const active = location.pathname === link.to;
+              return (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                    active
+                      ? "bg-au-red text-white shadow-sm"
+                      : "text-au-navy hover:bg-red-50 hover:text-au-red"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* Mobile toggle */}
+          <button
+            className="md:hidden p-2 rounded-md text-au-navy hover:bg-red-50 hover:text-au-red transition-colors"
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label="Toggle menu"
+          >
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
-      {mobileOpen && (
-        <div className="md:hidden border-t border-border bg-card animate-fade-in">
-          <nav className="container mx-auto px-4 py-3 flex flex-col gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                onClick={() => setMobileOpen(false)}
-                className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                  isActive(link.path)
-                    ? 'bg-primary/10 text-primary font-semibold'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
-            <div className="pt-2 pb-1">
-              <Link to="/submit" onClick={() => setMobileOpen(false)}>
-                <Button size="sm" className="w-full gradient-amber-teal text-white border-0 font-semibold">
-                  <GraduationCap className="h-4 w-4 mr-1.5" />
-                  Submit Work
-                </Button>
-              </Link>
-            </div>
-          </nav>
+      {menuOpen && (
+        <div className="md:hidden bg-white border-t border-red-100 shadow-lg">
+          <div className="px-4 py-3 space-y-1">
+            {navLinks.map((link) => {
+              const active = location.pathname === link.to;
+              return (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  onClick={() => setMenuOpen(false)}
+                  className={`block px-4 py-2.5 rounded-md text-sm font-medium transition-all ${
+                    active
+                      ? "bg-au-red text-white"
+                      : "text-au-navy hover:bg-red-50 hover:text-au-red"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </div>
         </div>
       )}
-    </header>
+    </nav>
   );
 }

@@ -1,16 +1,18 @@
 # Specification
 
 ## Summary
-**Goal:** Build SmartFeedback, an AI-enhanced student feedback platform with a clean academic UI, rule-based feedback generation, and separate views for students and instructors.
+**Goal:** Extend the Anurag University Feedback System with a fully functional Instructor Panel, including authentication, system analytics, instructor notes, instructor management, and a score distribution chart.
 
 **Planned changes:**
-- Apply a consistent visual theme using warm amber and teal accents, modern sans-serif typography, card-based layouts, and subtle animations across all pages
-- Implement a Motoko backend with stable storage for Students, Instructors, FeedbackSubmissions, and GeneratedFeedback entities, exposing CRUD operations for all
-- Add rule-based feedback analysis in Motoko (heuristics on word count, keyword presence, structure) that returns a score (0–100), a qualitative paragraph, and 3–5 improvement suggestions per submission
-- Build a Student Submission page with a form (name, student ID, assignment title, submission text), loading state, and inline display of generated feedback after submission
-- Build a Student Dashboard where students look up their history by student ID, viewing past submissions as sorted cards (title, date, score badge, feedback, suggestions)
-- Build an Instructor/Admin Panel with a student table (submission count, average score), aggregate stats, full feedback history per student, and add/delete student functionality
-- Create a landing/home page with a hero section, feature highlights (AI analysis, instant feedback, progress tracking), and navigation to all main sections
-- Serve the hero banner and feature icons as static assets from `frontend/public/assets/generated`
+- Add `Instructor` data type to the backend with fields (instructorId, name, email, department, PIN) and CRUD operations stored in a persistent Map
+- Add `verifyInstructor(instructorId, pin)` backend query for PIN-based authentication (PIN never returned in results)
+- Add `addInstructorNote(submissionId, note)` and `getSubmissionNote(submissionId)` backend functions with persistent storage
+- Add `getSystemStats()` backend function returning total students, total submissions, global average score, and top-performing student
+- Gate the Instructor Panel page behind a login form (Instructor ID + PIN); show error on wrong credentials and a Logout button when authenticated
+- Add a System Analytics section in the Instructor Panel with four stat cards (Total Students, Total Submissions, Average Score, Top Student) styled in au-red/au-navy
+- Add an Instructor Notes text area to each submission detail view in the Instructor Panel, with save (toast confirmation) and pre-fill on load
+- Add a Manage Instructors sub-section with a form to add new instructors and a table listing existing instructors with Delete actions
+- Add a Score Distribution chart (CSS/Tailwind only, no external libraries) with five score-range buckets (0–20, 21–40, 41–60, 61–80, 81–100) styled in au-red
+- Add React Query hooks in `useQueries.ts` for all new backend calls: `useVerifyInstructor`, `useGetSystemStats`, `useAddInstructorNote`, `useGetSubmissionNote`, `useGetAllInstructors`, `useAddInstructor`, `useDeleteInstructor`
 
-**User-visible outcome:** Users can visit the landing page, submit assignments for instant AI-generated feedback, review their submission history on a personal dashboard, and instructors can manage students and view aggregate performance stats through an admin panel.
+**User-visible outcome:** Instructors can log into the Instructor Panel with a PIN, view platform-wide analytics, add and manage instructor accounts, annotate student submissions with notes, and see a score distribution chart — all within the existing au-red/au-navy branded interface.

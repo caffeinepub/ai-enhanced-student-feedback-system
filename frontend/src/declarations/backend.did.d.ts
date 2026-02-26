@@ -25,6 +25,15 @@ export interface GeneratedFeedback {
   'timestamp' : Time,
   'submissionId' : SubmissionId,
 }
+export interface Instructor {
+  'pin' : Pin,
+  'name' : string,
+  'email' : string,
+  'instructorId' : InstructorId,
+  'department' : string,
+}
+export type InstructorId = bigint;
+export type Pin = string;
 export interface Student {
   'studentId' : StudentId,
   'name' : string,
@@ -33,9 +42,16 @@ export interface Student {
 export type StudentId = string;
 export type SubmissionId = bigint;
 export interface Suggestion { 'text' : string }
+export interface SystemStats {
+  'topStudent' : [] | [{ 'studentId' : StudentId, 'averageScore' : bigint }],
+  'totalStudents' : bigint,
+  'totalSubmissions' : bigint,
+  'overallAverageScore' : bigint,
+}
 export type Time = bigint;
 export interface _SERVICE {
   'addStudent' : ActorMethod<[StudentId, string, string], undefined>,
+  'addSubmissionNote' : ActorMethod<[SubmissionId, string], undefined>,
   'createSubmission' : ActorMethod<
     [StudentId, AssignmentTitle, string],
     SubmissionId
@@ -45,18 +61,31 @@ export interface _SERVICE {
     [StudentId],
     Array<GeneratedFeedback>
   >,
+  'getAllInstructors' : ActorMethod<[], Array<Instructor>>,
   'getAllStudents' : ActorMethod<[], Array<Student>>,
   'getAllSubmissionsByStudent' : ActorMethod<
     [StudentId],
     Array<FeedbackSubmission>
   >,
   'getFeedback' : ActorMethod<[SubmissionId], GeneratedFeedback>,
+  'getInstructor' : ActorMethod<[InstructorId], Instructor>,
   'getStudent' : ActorMethod<[StudentId], Student>,
   'getStudentStats' : ActorMethod<
     [StudentId],
     { 'totalSubmissions' : bigint, 'averageScore' : bigint }
   >,
   'getSubmissionById' : ActorMethod<[SubmissionId], FeedbackSubmission>,
+  'getSubmissionNote' : ActorMethod<[SubmissionId], string>,
+  'getSystemStats' : ActorMethod<[], SystemStats>,
+  'registerInstructor' : ActorMethod<
+    [string, string, string, Pin],
+    InstructorId
+  >,
+  'updateInstructor' : ActorMethod<
+    [InstructorId, string, string, string, Pin],
+    undefined
+  >,
+  'verifyInstructor' : ActorMethod<[InstructorId, Pin], boolean>,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

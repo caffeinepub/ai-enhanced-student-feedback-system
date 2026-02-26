@@ -1,35 +1,32 @@
-import { useState } from 'react';
-import { useCreateSubmission, useGenerateFeedback } from '../hooks/useQueries';
-import type { GeneratedFeedback } from '../backend';
-import FeedbackDisplay from '../components/FeedbackDisplay';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Loader2, Send, Sparkles, AlertCircle, Info } from 'lucide-react';
+import { useState } from "react";
+import { Brain, Send, Loader2, CheckCircle, AlertCircle, Sparkles } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { useCreateSubmission, useGenerateFeedback } from "@/hooks/useQueries";
+import FeedbackDisplay from "@/components/FeedbackDisplay";
+import { GeneratedFeedback } from "@/backend";
 
 export default function StudentSubmission() {
-  const [studentId, setStudentId] = useState('');
-  const [assignmentTitle, setAssignmentTitle] = useState('');
-  const [submissionText, setSubmissionText] = useState('');
-  const [feedback, setFeedback] = useState<GeneratedFeedback | null>(null);
-  const [error, setError] = useState('');
+  const [studentId, setStudentId]         = useState("");
+  const [assignmentTitle, setAssignmentTitle] = useState("");
+  const [submissionText, setSubmissionText]   = useState("");
+  const [feedback, setFeedback]           = useState<GeneratedFeedback | null>(null);
+  const [error, setError]                 = useState<string | null>(null);
 
   const createSubmission = useCreateSubmission();
   const generateFeedback = useGenerateFeedback();
 
   const isLoading = createSubmission.isPending || generateFeedback.isPending;
 
-  const wordCount = submissionText.trim().split(/\s+/).filter(Boolean).length;
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setError('');
+    setError(null);
     setFeedback(null);
 
     if (!studentId.trim() || !assignmentTitle.trim() || !submissionText.trim()) {
-      setError('All fields are required.');
+      setError("Please fill in all fields.");
       return;
     }
 
@@ -39,152 +36,141 @@ export default function StudentSubmission() {
         assignmentTitle: assignmentTitle.trim(),
         submissionText: submissionText.trim(),
       });
-
-      const result = await generateFeedback.mutateAsync(submissionId);
-      setFeedback(result);
+      const fb = await generateFeedback.mutateAsync(submissionId);
+      setFeedback(fb);
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Submission failed.';
-      if (msg.includes('Student does not exist')) {
-        setError(`Student ID "${studentId}" not found. Please register with your instructor first.`);
+      const msg = err instanceof Error ? err.message : String(err);
+      if (msg.includes("Student does not exist")) {
+        setError("Student ID not found. Please check your ID or contact your instructor.");
       } else {
-        setError(msg);
+        setError("Something went wrong. Please try again.");
       }
     }
-  };
-
-  const handleReset = () => {
-    setFeedback(null);
-    setError('');
-    setSubmissionText('');
-    setAssignmentTitle('');
-  };
+  }
 
   return (
-    <main className="flex-1 container mx-auto px-4 py-10 max-w-3xl">
-      {/* Header */}
-      <div className="mb-8 animate-fade-in">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold mb-4">
-          <Sparkles className="h-3.5 w-3.5" />
-          AI Feedback
+    <div className="min-h-screen bg-background pt-20 pb-12 px-4">
+      <div className="max-w-2xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-au-red mb-4 shadow-glow-red">
+            <Brain size={26} className="text-white" />
+          </div>
+          <h1 className="font-display text-3xl font-bold text-au-navy mb-2">
+            Submit Assignment
+          </h1>
+          <p className="text-muted-foreground text-sm">
+            Submit your work and receive instant AI-powered feedback.
+          </p>
         </div>
-        <h1 className="font-display font-bold text-3xl md:text-4xl text-foreground mb-2">
-          Submit Your Assignment
-        </h1>
-        <p className="text-muted-foreground">
-          Enter your work below and receive instant AI-powered feedback with a score and improvement suggestions.
-        </p>
-      </div>
 
-      {/* Info tip */}
-      <div className="flex items-start gap-2.5 bg-teal-light/40 border border-teal/20 rounded-xl px-4 py-3 mb-6 text-sm text-foreground animate-fade-in">
-        <Info className="h-4 w-4 text-teal mt-0.5 shrink-0" />
-        <span>
-          <strong>Tip:</strong> Longer, well-structured submissions (200+ words) receive higher scores. Make sure your Student ID is registered with your instructor.
-        </span>
-      </div>
-
-      {/* Form */}
-      <Card className="border border-border shadow-card animate-fade-in">
-        <CardHeader>
-          <CardTitle className="font-display text-xl">Assignment Details</CardTitle>
-          <CardDescription>Fill in all fields to receive your AI feedback.</CardDescription>
-        </CardHeader>
-        <CardContent>
+        {/* Form card */}
+        <div className="bg-white rounded-2xl border border-red-100 shadow-sm p-6 sm:p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <Label htmlFor="studentId" className="text-sm font-medium">
-                  Student ID <span className="text-destructive">*</span>
-                </Label>
-                <Input
-                  id="studentId"
-                  placeholder="e.g. STU-001"
-                  value={studentId}
-                  onChange={(e) => setStudentId(e.target.value)}
-                  disabled={isLoading}
-                  className="font-mono"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="assignmentTitle" className="text-sm font-medium">
-                  Assignment Title <span className="text-destructive">*</span>
-                </Label>
-                <Input
-                  id="assignmentTitle"
-                  placeholder="e.g. Essay on Climate Change"
-                  value={assignmentTitle}
-                  onChange={(e) => setAssignmentTitle(e.target.value)}
-                  disabled={isLoading}
-                />
-              </div>
-            </div>
-
             <div className="space-y-1.5">
-              <div className="flex items-center justify-between">
-                <Label htmlFor="submissionText" className="text-sm font-medium">
-                  Submission Text <span className="text-destructive">*</span>
-                </Label>
-                <span className={`text-xs ${wordCount >= 200 ? 'text-teal font-medium' : 'text-muted-foreground'}`}>
-                  {wordCount} words {wordCount >= 200 ? '✓' : '(aim for 200+)'}
-                </span>
-              </div>
-              <Textarea
-                id="submissionText"
-                placeholder="Write or paste your assignment text here…"
-                value={submissionText}
-                onChange={(e) => setSubmissionText(e.target.value)}
+              <Label htmlFor="studentId" className="text-au-navy font-medium text-sm">
+                Student ID
+              </Label>
+              <Input
+                id="studentId"
+                placeholder="e.g. AU2024001"
+                value={studentId}
+                onChange={(e) => setStudentId(e.target.value)}
                 disabled={isLoading}
-                rows={10}
-                className="resize-none leading-relaxed"
+                className="border-red-100 focus:border-au-red focus:ring-au-red"
               />
             </div>
 
+            <div className="space-y-1.5">
+              <Label htmlFor="assignmentTitle" className="text-au-navy font-medium text-sm">
+                Assignment Title
+              </Label>
+              <Input
+                id="assignmentTitle"
+                placeholder="e.g. Data Structures Essay"
+                value={assignmentTitle}
+                onChange={(e) => setAssignmentTitle(e.target.value)}
+                disabled={isLoading}
+                className="border-red-100 focus:border-au-red focus:ring-au-red"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <Label htmlFor="submissionText" className="text-au-navy font-medium text-sm">
+                Submission Text
+              </Label>
+              <Textarea
+                id="submissionText"
+                placeholder="Paste or type your assignment here..."
+                value={submissionText}
+                onChange={(e) => setSubmissionText(e.target.value)}
+                disabled={isLoading}
+                rows={8}
+                className="border-red-100 focus:border-au-red focus:ring-au-red resize-none"
+              />
+              <p className="text-xs text-muted-foreground">
+                {submissionText.trim().split(/\s+/).filter(Boolean).length} words
+              </p>
+            </div>
+
+            {/* Error */}
             {error && (
-              <div className="flex items-start gap-2 text-sm text-destructive bg-destructive/5 border border-destructive/20 rounded-lg px-3 py-2.5">
-                <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
-                {error}
+              <div className="flex items-start gap-2 p-3 rounded-lg bg-red-50 border border-red-200 text-sm text-red-700">
+                <AlertCircle size={15} className="mt-0.5 flex-shrink-0" />
+                <span>{error}</span>
               </div>
             )}
 
-            <div className="flex gap-3">
-              <Button
-                type="submit"
-                disabled={isLoading}
-                className="flex-1 gradient-amber-teal text-white border-0 hover:opacity-90 font-semibold"
-                size="lg"
-              >
-                {isLoading ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    {createSubmission.isPending ? 'Submitting…' : 'Generating feedback…'}
-                  </>
-                ) : (
-                  <>
-                    <Send className="h-4 w-4 mr-2" />
-                    Submit & Get Feedback
-                  </>
-                )}
-              </Button>
-              {feedback && (
-                <Button type="button" variant="outline" onClick={handleReset} size="lg">
-                  New Submission
-                </Button>
-              )}
-            </div>
-          </form>
-        </CardContent>
-      </Card>
+            {/* AI loading state */}
+            {isLoading && (
+              <div className="flex flex-col items-center gap-4 py-6">
+                <div className="relative">
+                  <div className="w-16 h-16 rounded-full bg-red-50 animate-ping-ring absolute inset-0" />
+                  <div className="w-16 h-16 rounded-full bg-red-100 animate-ping-ring absolute inset-0" style={{ animationDelay: "0.5s" }} />
+                  <div className="relative w-16 h-16 rounded-full bg-au-red flex items-center justify-center shadow-glow-red">
+                    <Brain size={28} className="text-white animate-spin" style={{ animationDuration: "3s" }} />
+                  </div>
+                </div>
+                <div className="text-center">
+                  <p className="text-sm font-semibold text-au-navy">
+                    {createSubmission.isPending ? "Submitting…" : "Generating AI Feedback…"}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    This may take a moment
+                  </p>
+                </div>
+              </div>
+            )}
 
-      {/* Feedback result */}
-      {feedback && (
-        <div className="mt-8">
-          <h2 className="font-display font-bold text-xl text-foreground mb-4 flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-primary" />
-            Your AI Feedback
-          </h2>
-          <FeedbackDisplay feedback={feedback} />
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full bg-au-red hover:bg-au-red-dark text-white font-semibold rounded-xl py-3 shadow-sm hover:shadow-glow-red transition-all duration-200"
+            >
+              {isLoading ? (
+                <Loader2 size={16} className="animate-spin mr-2" />
+              ) : (
+                <Send size={16} className="mr-2" />
+              )}
+              {isLoading ? "Processing…" : "Submit & Get Feedback"}
+            </Button>
+          </form>
         </div>
-      )}
-    </main>
+
+        {/* Feedback result */}
+        {feedback && !isLoading && (
+          <div className="mt-6 bg-white rounded-2xl border border-red-100 shadow-sm p-6">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-lg bg-au-red flex items-center justify-center">
+                <Sparkles size={16} className="text-white" />
+              </div>
+              <h2 className="text-base font-semibold text-au-navy">AI Feedback</h2>
+              <CheckCircle size={16} className="text-au-red ml-auto" />
+            </div>
+            <FeedbackDisplay feedback={feedback} />
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

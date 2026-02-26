@@ -1,103 +1,62 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-26T08:34:29.741Z",
-  "summary": "The diff implements most of the required features across backend and frontend. All major pages, components, backend data model, and rule-based feedback generation are present. However, there are notable gaps: the backend deleteStudent functionality is explicitly noted as missing in the InstructorPanel comments, the student name field is absent from the submission form, backend stable variable persistence is not confirmed from the truncated code, and aggregate stats across all students in the instructor panel appear incomplete. The constraint against modifying files under frontend/src/hooks/ appears violated since new hook files were added there.",
+  "generatedAt": "2026-02-26T09:42:32.169Z",
+  "summary": "The diff implements the majority of the requirements. Backend (main.mo) adds Instructor type, CRUD, verifyInstructor, addInstructorNote, getSubmissionNote, and getSystemStats. Frontend adds login gate, system analytics, instructor notes, manage instructors section, score distribution chart, and React Query hooks. A few specific acceptance criteria gaps are noted below.",
   "missing_requirements": [
     {
-      "id": "REQ-2",
-      "requirement": "All data must persist across canister upgrades using stable variables",
-      "reason": "The backend uses Map.empty() and Set.empty() assigned to plain let bindings. Without the explicit 'stable' keyword, data will not persist across canister upgrades. The truncated backend code shows no stable variable declarations.",
+      "id": "REQ-20",
+      "requirement": "Expose an update operation for instructors (CRUD: create, get, update, delete).",
+      "reason": "The diff shows addInstructor, getInstructor, getAllInstructors, and deleteInstructor in the backend, but no updateInstructor function is visible in the truncated backend/main.mo. The AC explicitly requires CRUD (create, get, update, delete) operations.",
       "evidence": [
         "backend/main.mo"
       ]
     },
     {
-      "id": "REQ-3",
-      "requirement": "Form includes field: student name",
-      "reason": "The StudentSubmission page form shows only studentId, assignmentTitle, and submissionText fields. No student name field is present, but the AC explicitly requires one.",
+      "id": "REQ-26",
+      "requirement": "Show save confirmation with a toast notification when saving an instructor note.",
+      "reason": "The InstructorNotes component in SubmissionCard.tsx calls saveNote.mutate() but the diff does not show an onSuccess toast callback in useAddInstructorNote hook (the hook file is truncated). The SubmissionCard itself has no visible toast call on save. The AC requires a success toast notification.",
       "evidence": [
-        "frontend/src/pages/StudentSubmission.tsx"
-      ]
-    },
-    {
-      "id": "REQ-6",
-      "requirement": "Instructors can delete a student and all their associated data",
-      "reason": "InstructorPanel.tsx explicitly comments that the backend does not expose a deleteStudent method. The handleDeleteConfirm function does nothing except close the dialog. No deleteStudent is visible in backend/main.mo or useQueries.ts.",
-      "evidence": [
-        "frontend/src/pages/InstructorPanel.tsx",
-        "backend/main.mo",
+        "frontend/src/components/SubmissionCard.tsx",
         "frontend/src/hooks/useQueries.ts"
       ]
     },
     {
-      "id": "REQ-6",
-      "requirement": "Aggregate stats (total submissions, overall average score across all students) shown at the top of the panel",
-      "reason": "The useQueries hooks only expose per-student stats via getStudentStats. No global aggregate function is defined in the backend or queries. The InstructorPanel only shows totalStudents count, not a global total submissions or overall average score.",
+      "id": "REQ-27",
+      "requirement": "The AddInstructorForm must include a user-specified instructorId field per the AC: 'Form to add a new instructor with name, department, ID, and PIN fields'.",
+      "reason": "AddInstructorForm.tsx only has name, email, department, and PIN fields. There is no instructorId input field — the backend auto-assigns IDs. The AC explicitly requires an ID field in the add form.",
       "evidence": [
-        "frontend/src/pages/InstructorPanel.tsx",
-        "frontend/src/hooks/useQueries.ts",
-        "backend/main.mo"
+        "frontend/src/components/AddInstructorForm.tsx"
       ]
     }
   ],
   "hallucinated_features": [
     {
-      "description": "Full Internet Identity authentication provider wrapping the entire app",
-      "reason": "The build request explicitly lists Internet Identity or user authentication as a non-goal, yet InternetIdentityProvider wraps the entire app in main.tsx and a full AuthClient-based II flow is implemented in useInternetIdentity.ts.",
+      "description": "A migration.mo module was added as a separate file to handle canister state migration.",
+      "reason": "The build request did not mention a separate migration module file; it only required persistent storage across canister upgrades. The migration.mo file is an additional architectural artifact not explicitly requested.",
       "evidence": [
-        "frontend/src/main.tsx",
-        "frontend/src/hooks/useInternetIdentity.ts",
-        "frontend/src/hooks/useActor.ts"
+        "backend/migration.mo"
       ]
     },
     {
-      "description": "Social proof stats bar on the landing page with fabricated numbers (2,400+ students, 18,000+ feedback generated)",
-      "reason": "The build request does not mention a stats or social proof section on the landing page. This is an unrequested addition.",
+      "description": "AddInstructorForm includes an email field beyond what REQ-27 specifies for the add form.",
+      "reason": "REQ-27 specifies the add-instructor form should have name, department, ID, and PIN fields only. An email field was added beyond the specified form fields.",
       "evidence": [
-        "frontend/src/pages/Home.tsx"
-      ]
-    },
-    {
-      "description": "Word count indicator on the submission form",
-      "reason": "The build request does not mention a word count display on the submission form. This is an extra UI feature added beyond the specified requirements.",
-      "evidence": [
-        "frontend/src/pages/StudentSubmission.tsx"
-      ]
-    },
-    {
-      "description": "caffeine.ai attribution link with UTM tracking parameters in the footer",
-      "reason": "The build request does not mention any third-party attribution links. This is an unrequested addition in the Footer component.",
-      "evidence": [
-        "frontend/src/components/Footer.tsx"
+        "frontend/src/components/AddInstructorForm.tsx"
       ]
     }
   ],
   "confidence": 0.72,
   "changed_files": [
-    "all_files_summary.json",
     "backend/main.mo",
+    "backend/migration.mo",
     "frontend-file-summaries.txt",
-    "frontend/index.css",
-    "frontend/index.html",
-    "frontend/src/App.tsx",
-    "frontend/src/components/AddStudentForm.tsx",
-    "frontend/src/components/FeatureCard.tsx",
-    "frontend/src/components/FeedbackDisplay.tsx",
-    "frontend/src/components/Footer.tsx",
-    "frontend/src/components/Navigation.tsx",
-    "frontend/src/components/StudentTable.tsx",
+    "frontend/src/components/AddInstructorForm.tsx",
+    "frontend/src/components/InstructorTable.tsx",
+    "frontend/src/components/ScoreDistributionChart.tsx",
     "frontend/src/components/SubmissionCard.tsx",
-    "frontend/src/hooks/useActor.ts",
-    "frontend/src/hooks/useInternetIdentity.ts",
     "frontend/src/hooks/useQueries.ts",
-    "frontend/src/index.css",
-    "frontend/src/main.tsx",
-    "frontend/src/pages/Home.tsx",
     "frontend/src/pages/InstructorPanel.tsx",
-    "frontend/src/pages/StudentDashboard.tsx",
-    "frontend/src/pages/StudentSubmission.tsx",
-    "frontend/tailwind.config.js",
     "project_state.json"
   ]
 }
