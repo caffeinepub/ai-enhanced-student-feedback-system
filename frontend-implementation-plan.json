@@ -1,0 +1,164 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "AI-Enhanced Student Feedback System - Frontend Implementation",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Design and implement a cohesive visual theme for the application with warm amber and teal accents, modern sans-serif typography, card-based layouts, and subtle animations",
+      "acceptanceCriteria": [
+        "All pages share a unified color palette (warm amber + teal primary colors, neutral backgrounds)",
+        "Typography is consistent across headings, body text, and labels",
+        "Card-based layout is used for feedback items and dashboard panels",
+        "Visual style is coherent and professional across all views"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Extend the default theme to include custom warm amber and teal accent colors (e.g., primary-amber, primary-teal, secondary shades), configure font families for modern sans-serif typography, and add custom animation utilities for subtle transitions"
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Define global CSS variables and base styles using the warm amber and teal palette, set consistent typography rules (heading scales, body text, labels), establish card component base styles, and configure subtle animation defaults"
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Build a student feedback submission interface where students can submit assignments and receive AI feedback inline",
+      "acceptanceCriteria": [
+        "Form includes fields: student name, student ID, assignment title, submission text",
+        "Submit button triggers backend call and shows a loading indicator",
+        "Generated feedback (score, text, suggestions) is displayed below the form after submission",
+        "Form validates that all required fields are filled before submission"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/StudentSubmission.tsx",
+          "operation": "create",
+          "description": "Create a submission page with a form containing inputs for student name, student ID, assignment title (input or select), and a textarea for submission text. On submit, validate required fields, call backend.createSubmission() followed by backend.generateFeedback(), display a loading state during processing, and render the returned feedback (score, feedbackText, suggestions array) inline below the form using card-based layout with amber/teal styling"
+        },
+        {
+          "path": "frontend/src/components/FeedbackDisplay.tsx",
+          "operation": "create",
+          "description": "Create a reusable component that accepts feedback data (score, feedbackText, suggestions) as props and renders it in a card layout with score badge (styled with amber/teal gradient), feedback paragraph, and a bulleted list of suggestions. Apply consistent typography and spacing per the design theme"
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add a route for /submit that renders the StudentSubmission page component"
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Build a student dashboard where students can view all their past submissions and corresponding AI-generated feedback",
+      "acceptanceCriteria": [
+        "Students can look up their history by student ID",
+        "Each submission is displayed as a card with: assignment title, date, score badge, feedback text, and suggestions list",
+        "Cards are sorted by most recent first",
+        "Empty state is shown if no submissions are found"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/StudentDashboard.tsx",
+          "operation": "create",
+          "description": "Create a dashboard page with an input for student ID and a lookup button. On lookup, call backend.getAllSubmissionsByStudent() and backend.getAllFeedbackForStudent() to retrieve submissions and their feedback. Render each submission as a card showing assignment title, formatted submission date, score badge, feedback paragraph, and suggestions list. Sort cards by timestamp (most recent first). Show an empty state message when no submissions are found"
+        },
+        {
+          "path": "frontend/src/components/SubmissionCard.tsx",
+          "operation": "create",
+          "description": "Create a reusable submission card component that accepts submission and feedback data as props. Render assignment title as a heading, format and display the submission timestamp, include a score badge with conditional color styling (amber/teal gradient for high scores), display feedback text, and list suggestions. Use card-based layout with subtle shadow and hover animations per the design theme"
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add a route for /dashboard that renders the StudentDashboard page component"
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Build an instructor/admin panel that lists all students, displays aggregate stats, and allows CRUD operations on students",
+      "acceptanceCriteria": [
+        "Admin panel shows a table of all students with their total submission count and average score",
+        "Clicking a student reveals their full feedback history",
+        "Aggregate stats (total submissions, overall average score) are shown at the top of the panel",
+        "Instructors can add a new student (name, studentId, course) via a form",
+        "Instructors can delete a student and all their associated data"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/InstructorPanel.tsx",
+          "operation": "create",
+          "description": "Create an instructor panel page that calls backend.getAllStudents() to fetch all students. Display aggregate statistics at the top (calculate total submissions and overall average score from student stats). Render a table of students with columns for name, student ID, course, total submissions, and average score (fetch per-student stats using backend.getStudentStats()). Include an 'Add Student' form with fields for name, studentId, and course that calls backend.addStudent(). Provide a delete button per student row. Include a detail view that shows a student's full feedback history when clicked (reuse SubmissionCard component)"
+        },
+        {
+          "path": "frontend/src/components/StudentTable.tsx",
+          "operation": "create",
+          "description": "Create a reusable table component that accepts an array of students with their stats and renders them in a styled table with columns for name, studentId, course, total submissions, and average score. Include action buttons (view details, delete) per row. Apply consistent styling with the warm amber/teal theme and card-based layout for the table container"
+        },
+        {
+          "path": "frontend/src/components/AddStudentForm.tsx",
+          "operation": "create",
+          "description": "Create a form component with inputs for student name, student ID, and course. Include validation for required fields and a submit button that calls backend.addStudent() on submit. Show success/error feedback after submission. Style the form consistently with the design theme"
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add a route for /admin that renders the InstructorPanel page component"
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Create a landing/home page that introduces the SmartFeedback platform and provides navigation to main sections",
+      "acceptanceCriteria": [
+        "Hero section with app name, tagline, and two primary CTA buttons (Submit Feedback, View Dashboard)",
+        "Feature highlights section with at least 3 feature cards",
+        "Navigation header links to all main sections",
+        "Page is responsive and visually consistent with the overall theme"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/Home.tsx",
+          "operation": "create",
+          "description": "Create a landing page with a hero section containing the app name 'SmartFeedback', a tagline about AI-powered feedback, and two prominent CTA buttons linking to /submit and /dashboard. Include a features section with 3+ feature cards highlighting AI-powered analysis, instant feedback, and progress tracking. Ensure the page is fully responsive and uses the warm amber/teal color palette with card-based layouts for feature highlights. Reference the generated hero banner image from frontend/public/assets/generated/hero-banner.dim_1200x400.png in the hero section"
+        },
+        {
+          "path": "frontend/src/components/Navigation.tsx",
+          "operation": "create",
+          "description": "Create a navigation header component with links to Home, Student Submission, Student Dashboard, and Instructor Panel. Style the navigation bar with the warm amber/teal theme, include hover effects, and ensure it is responsive. This component will be used across all pages for consistent navigation"
+        },
+        {
+          "path": "frontend/src/components/FeatureCard.tsx",
+          "operation": "create",
+          "description": "Create a reusable feature card component that accepts title, description, and icon path as props. Render the card with the icon image at the top, title as a heading, and description text below. Apply card-based styling with subtle shadows and hover animations consistent with the design theme"
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add a route for / (root) that renders the Home page component and include the Navigation component at the top level so it appears on all pages"
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Render the generated hero banner and feature icons as static assets from frontend/public/assets/generated",
+      "acceptanceCriteria": [
+        "Hero banner image is displayed on the landing page",
+        "Feature section icons are displayed in their respective cards",
+        "Images load correctly from the /assets/generated path"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/Home.tsx",
+          "operation": "modify",
+          "description": "Wire the generated hero banner image from frontend/public/assets/generated/hero-banner.dim_1200x400.png into the hero section as a background or inline image element. Wire the feature icons (frontend/public/assets/generated/icon-ai.dim_128x128.png, frontend/public/assets/generated/icon-submit.dim_128x128.png, frontend/public/assets/generated/icon-progress.dim_128x128.png) into their respective feature cards by passing the asset paths to the FeatureCard component"
+        }
+      ]
+    }
+  ]
+}

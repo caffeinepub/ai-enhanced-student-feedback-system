@@ -1,0 +1,108 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "AI-enhanced feedback system website for students. The platform will leverage AI to provide intelligent, personalized feedback to students.",
+  "architectural_notes": [
+    "Web-based application targeting students and instructors",
+    "AI integration for feedback analysis and personalized suggestions"
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Wide hero banner illustration showing a student at a desk with glowing AI feedback elements and floating document icons, warm amber and teal color palette (hero-banner.dim_1200x400.png)\n- Small flat icon of a brain with circuit lines representing AI analysis (icon-ai.dim_128x128.png)\n- Small flat icon of a document with a checkmark representing feedback submission (icon-submit.dim_128x128.png)\n- Small flat icon of a bar chart with an upward trend representing progress tracking (icon-progress.dim_128x128.png)",
+  "existing_features": [
+    {
+      "id": "feature-design-and-implement-a-cohesive-visual-theme-for-the-application-use-a-clean-academic-aesthetic-with-warm-amber-and-teal-accents-modern-sans-serif-typography-card-based-layouts-and-subtle-animations-apply-the-theme-consistently-across-all-pages-and-components",
+      "title": "Design and implement a cohesive visual theme for the application: use a clean academic aesthetic with warm amber and teal accents, modern sans-serif typography, card-based layouts, and subtle animations. Apply the theme consistently across all pages and components.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-student-feedback-submission-interface-where-students-can-enter-their-name-and-student-id-select-or-type-an-assignment-title-write-their-submission-text-and-submit-it-for-ai-feedback-show-a-loading-state-while-feedback-is-being-processed-and-display-the-returned-feedback-inline-after-submission",
+      "title": "Build a student feedback submission interface where students can enter their name and student ID, select or type an assignment title, write their submission text, and submit it for AI feedback. Show a loading state while feedback is being processed and display the returned feedback inline after submission.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-student-dashboard-where-students-can-enter-their-student-id-to-view-all-their-past-submissions-and-the-corresponding-ai-generated-feedback-each-submission-card-should-show-the-assignment-title-submission-date-score-feedback-paragraph-and-improvement-suggestions",
+      "title": "Build a student dashboard where students can enter their student ID to view all their past submissions and the corresponding AI-generated feedback. Each submission card should show the assignment title, submission date, score, feedback paragraph, and improvement suggestions.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-an-instructor-admin-panel-that-lists-all-students-and-their-submissions-instructors-can-view-any-student-s-full-feedback-history-see-aggregate-stats-total-submissions-average-score-across-all-students-and-manually-add-or-remove-students-from-the-system",
+      "title": "Build an instructor/admin panel that lists all students and their submissions. Instructors can view any student's full feedback history, see aggregate stats (total submissions, average score across all students), and manually add or remove students from the system.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-landing-home-page-that-introduces-the-smartfeedback-platform-highlights-key-features-ai-powered-analysis-instant-feedback-progress-tracking-and-provides-navigation-buttons-to-the-student-submission-page-student-dashboard-and-instructor-panel",
+      "title": "Create a landing/home page that introduces the SmartFeedback platform, highlights key features (AI-powered analysis, instant feedback, progress tracking), and provides navigation buttons to the Student Submission page, Student Dashboard, and Instructor Panel.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-render-the-generated-hero-banner-and-feature-icons-as-static-assets-from-frontend-public-assets-generated",
+      "title": "Render the generated hero banner and feature icons as static assets from frontend/public/assets/generated.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Student feedback submission interface",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "AI-powered feedback analysis and generation",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Student dashboard to view received feedback",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Instructor/admin panel to manage students and feedback",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Create a backend data model and API to manage Students, Instructors, FeedbackSubmissions, and GeneratedFeedback. Store student profiles (name, studentId, course), submissions (studentId, assignmentTitle, submissionText, timestamp), and AI-generated feedback (submissionId, feedbackText, score, suggestions, timestamp). Expose CRUD operations for all entities.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Implement AI-powered feedback analysis in the backend: when a submission is received, generate structured feedback including an overall score (0–100), a qualitative feedback paragraph, and a list of 3–5 actionable improvement suggestions. Use rule-based heuristics (e.g., word count, keyword presence, structure detection) to simulate AI scoring since external AI APIs are not available.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "AI-Enhanced Student Feedback System",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

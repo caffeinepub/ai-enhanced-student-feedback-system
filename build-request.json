@@ -1,0 +1,158 @@
+{
+  "kind": "build_request",
+  "title": "AI-Enhanced Student Feedback System",
+  "projectName": "SmartFeedback",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Design and implement a cohesive visual theme for the application: use a clean academic aesthetic with warm amber and teal accents, modern sans-serif typography, card-based layouts, and subtle animations. Apply the theme consistently across all pages and components.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All pages share a unified color palette (warm amber + teal primary colors, neutral backgrounds)",
+        "Typography is consistent across headings, body text, and labels",
+        "Card-based layout is used for feedback items and dashboard panels",
+        "Visual style is coherent and professional across all views"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Create a backend data model and API to manage Students, Instructors, FeedbackSubmissions, and GeneratedFeedback. Store student profiles (name, studentId, course), submissions (studentId, assignmentTitle, submissionText, timestamp), and AI-generated feedback (submissionId, feedbackText, score, suggestions, timestamp). Expose CRUD operations for all entities.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Students can be created, listed, and retrieved by ID",
+        "Feedback submissions can be created and listed per student",
+        "Generated feedback records can be stored and retrieved by submissionId",
+        "All data persists across canister upgrades"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Build a student feedback submission interface where students can enter their name and student ID, select or type an assignment title, write their submission text, and submit it for AI feedback. Show a loading state while feedback is being processed and display the returned feedback inline after submission.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Form includes fields: student name, student ID, assignment title, submission text",
+        "Submit button triggers backend call and shows a loading indicator",
+        "Generated feedback (score, text, suggestions) is displayed below the form after submission",
+        "Form validates that all required fields are filled before submission"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Implement AI-powered feedback analysis in the backend: when a submission is received, generate structured feedback including an overall score (0–100), a qualitative feedback paragraph, and a list of 3–5 actionable improvement suggestions. Use rule-based heuristics (e.g., word count, keyword presence, structure detection) to simulate AI scoring since external AI APIs are not available.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Every submission returns a score between 0 and 100",
+        "Feedback includes a qualitative paragraph tailored to the submission content",
+        "At least 3 improvement suggestions are returned per submission",
+        "Analysis results are stored and retrievable by submissionId"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Build a student dashboard where students can enter their student ID to view all their past submissions and the corresponding AI-generated feedback. Each submission card should show the assignment title, submission date, score, feedback paragraph, and improvement suggestions.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Students can look up their history by student ID",
+        "Each submission is displayed as a card with: assignment title, date, score badge, feedback text, and suggestions list",
+        "Cards are sorted by most recent first",
+        "Empty state is shown if no submissions are found"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Build an instructor/admin panel that lists all students and their submissions. Instructors can view any student's full feedback history, see aggregate stats (total submissions, average score across all students), and manually add or remove students from the system.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Admin panel shows a table of all students with their total submission count and average score",
+        "Clicking a student reveals their full feedback history",
+        "Aggregate stats (total submissions, overall average score) are shown at the top of the panel",
+        "Instructors can add a new student (name, studentId, course) via a form",
+        "Instructors can delete a student and all their associated data"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Create a landing/home page that introduces the SmartFeedback platform, highlights key features (AI-powered analysis, instant feedback, progress tracking), and provides navigation buttons to the Student Submission page, Student Dashboard, and Instructor Panel.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Hero section with app name, tagline, and two primary CTA buttons (Submit Feedback, View Dashboard)",
+        "Feature highlights section with at least 3 feature cards",
+        "Navigation header links to all main sections",
+        "Page is responsive and visually consistent with the overall theme"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Render the generated hero banner and feature icons as static assets from frontend/public/assets/generated.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Hero banner image is displayed on the landing page",
+        "Feature section icons are displayed in their respective cards",
+        "Images load correctly from the /assets/generated path"
+      ]
+    }
+  ],
+  "constraints": [
+    "All backend logic must reside in a single Motoko actor in backend/main.mo",
+    "No external AI APIs may be used; feedback generation must use rule-based heuristics in Motoko",
+    "Do not modify any files under frontend/src/hooks/ or frontend/src/components/ui",
+    "No external databases; all data must be stored in Motoko stable variables"
+  ],
+  "nonGoals": [
+    "Real-time notifications or WebSocket-based updates",
+    "Internet Identity or user authentication in this initial build",
+    "Email or SMS notifications to students or instructors",
+    "Mobile native app (web-only)",
+    "Integration with external LMS platforms (e.g., Canvas, Moodle)"
+  ],
+  "imageRequirements": {
+    "required": [
+      "Wide hero banner illustration showing a student at a desk with glowing AI feedback elements and floating document icons, warm amber and teal color palette (hero-banner.dim_1200x400.png)",
+      "Small flat icon of a brain with circuit lines representing AI analysis (icon-ai.dim_128x128.png)",
+      "Small flat icon of a document with a checkmark representing feedback submission (icon-submit.dim_128x128.png)",
+      "Small flat icon of a bar chart with an upward trend representing progress tracking (icon-progress.dim_128x128.png)"
+    ],
+    "edits": []
+  }
+}

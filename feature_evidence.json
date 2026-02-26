@@ -1,0 +1,124 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-design-and-implement-a-cohesive-visual-theme-for-the-application-use-a-clean-academic-aesthetic-with-warm-amber-and-teal-accents-modern-sans-serif-typography-card-based-layouts-and-subtle-animations-apply-the-theme-consistently-across-all-pages-and-components",
+      "featureTitle": "Design and implement a cohesive visual theme for the application: use a clean academic aesthetic with warm amber and teal accents, modern sans-serif typography, card-based layouts, and subtle animations. Apply the theme consistently across all pages and components.",
+      "files": [
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-a-student-feedback-submission-interface-where-students-can-enter-their-name-and-student-id-select-or-type-an-assignment-title-write-their-submission-text-and-submit-it-for-ai-feedback-show-a-loading-state-while-feedback-is-being-processed-and-display-the-returned-feedback-inline-after-submission",
+      "featureTitle": "Build a student feedback submission interface where students can enter their name and student ID, select or type an assignment title, write their submission text, and submit it for AI feedback. Show a loading state while feedback is being processed and display the returned feedback inline after submission.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/FeedbackDisplay.tsx",
+        "frontend/src/pages/StudentSubmission.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-a-student-dashboard-where-students-can-enter-their-student-id-to-view-all-their-past-submissions-and-the-corresponding-ai-generated-feedback-each-submission-card-should-show-the-assignment-title-submission-date-score-feedback-paragraph-and-improvement-suggestions",
+      "featureTitle": "Build a student dashboard where students can enter their student ID to view all their past submissions and the corresponding AI-generated feedback. Each submission card should show the assignment title, submission date, score, feedback paragraph, and improvement suggestions.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/SubmissionCard.tsx",
+        "frontend/src/pages/StudentDashboard.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-an-instructor-admin-panel-that-lists-all-students-and-their-submissions-instructors-can-view-any-student-s-full-feedback-history-see-aggregate-stats-total-submissions-average-score-across-all-students-and-manually-add-or-remove-students-from-the-system",
+      "featureTitle": "Build an instructor/admin panel that lists all students and their submissions. Instructors can view any student's full feedback history, see aggregate stats (total submissions, average score across all students), and manually add or remove students from the system.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/AddStudentForm.tsx",
+        "frontend/src/components/StudentTable.tsx",
+        "frontend/src/pages/InstructorPanel.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-a-landing-home-page-that-introduces-the-smartfeedback-platform-highlights-key-features-ai-powered-analysis-instant-feedback-progress-tracking-and-provides-navigation-buttons-to-the-student-submission-page-student-dashboard-and-instructor-panel",
+      "featureTitle": "Create a landing/home page that introduces the SmartFeedback platform, highlights key features (AI-powered analysis, instant feedback, progress tracking), and provides navigation buttons to the Student Submission page, Student Dashboard, and Instructor Panel.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/FeatureCard.tsx",
+        "frontend/src/components/Navigation.tsx",
+        "frontend/src/pages/Home.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-render-the-generated-hero-banner-and-feature-icons-as-static-assets-from-frontend-public-assets-generated",
+      "featureTitle": "Render the generated hero banner and feature icons as static assets from frontend/public/assets/generated.",
+      "files": [
+        "frontend/src/pages/Home.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

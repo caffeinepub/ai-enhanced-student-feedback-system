@@ -1,0 +1,103 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-26T08:34:29.741Z",
+  "summary": "The diff implements most of the required features across backend and frontend. All major pages, components, backend data model, and rule-based feedback generation are present. However, there are notable gaps: the backend deleteStudent functionality is explicitly noted as missing in the InstructorPanel comments, the student name field is absent from the submission form, backend stable variable persistence is not confirmed from the truncated code, and aggregate stats across all students in the instructor panel appear incomplete. The constraint against modifying files under frontend/src/hooks/ appears violated since new hook files were added there.",
+  "missing_requirements": [
+    {
+      "id": "REQ-2",
+      "requirement": "All data must persist across canister upgrades using stable variables",
+      "reason": "The backend uses Map.empty() and Set.empty() assigned to plain let bindings. Without the explicit 'stable' keyword, data will not persist across canister upgrades. The truncated backend code shows no stable variable declarations.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "requirement": "Form includes field: student name",
+      "reason": "The StudentSubmission page form shows only studentId, assignmentTitle, and submissionText fields. No student name field is present, but the AC explicitly requires one.",
+      "evidence": [
+        "frontend/src/pages/StudentSubmission.tsx"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "requirement": "Instructors can delete a student and all their associated data",
+      "reason": "InstructorPanel.tsx explicitly comments that the backend does not expose a deleteStudent method. The handleDeleteConfirm function does nothing except close the dialog. No deleteStudent is visible in backend/main.mo or useQueries.ts.",
+      "evidence": [
+        "frontend/src/pages/InstructorPanel.tsx",
+        "backend/main.mo",
+        "frontend/src/hooks/useQueries.ts"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "requirement": "Aggregate stats (total submissions, overall average score across all students) shown at the top of the panel",
+      "reason": "The useQueries hooks only expose per-student stats via getStudentStats. No global aggregate function is defined in the backend or queries. The InstructorPanel only shows totalStudents count, not a global total submissions or overall average score.",
+      "evidence": [
+        "frontend/src/pages/InstructorPanel.tsx",
+        "frontend/src/hooks/useQueries.ts",
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Full Internet Identity authentication provider wrapping the entire app",
+      "reason": "The build request explicitly lists Internet Identity or user authentication as a non-goal, yet InternetIdentityProvider wraps the entire app in main.tsx and a full AuthClient-based II flow is implemented in useInternetIdentity.ts.",
+      "evidence": [
+        "frontend/src/main.tsx",
+        "frontend/src/hooks/useInternetIdentity.ts",
+        "frontend/src/hooks/useActor.ts"
+      ]
+    },
+    {
+      "description": "Social proof stats bar on the landing page with fabricated numbers (2,400+ students, 18,000+ feedback generated)",
+      "reason": "The build request does not mention a stats or social proof section on the landing page. This is an unrequested addition.",
+      "evidence": [
+        "frontend/src/pages/Home.tsx"
+      ]
+    },
+    {
+      "description": "Word count indicator on the submission form",
+      "reason": "The build request does not mention a word count display on the submission form. This is an extra UI feature added beyond the specified requirements.",
+      "evidence": [
+        "frontend/src/pages/StudentSubmission.tsx"
+      ]
+    },
+    {
+      "description": "caffeine.ai attribution link with UTM tracking parameters in the footer",
+      "reason": "The build request does not mention any third-party attribution links. This is an unrequested addition in the Footer component.",
+      "evidence": [
+        "frontend/src/components/Footer.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.72,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/AddStudentForm.tsx",
+    "frontend/src/components/FeatureCard.tsx",
+    "frontend/src/components/FeedbackDisplay.tsx",
+    "frontend/src/components/Footer.tsx",
+    "frontend/src/components/Navigation.tsx",
+    "frontend/src/components/StudentTable.tsx",
+    "frontend/src/components/SubmissionCard.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/Home.tsx",
+    "frontend/src/pages/InstructorPanel.tsx",
+    "frontend/src/pages/StudentDashboard.tsx",
+    "frontend/src/pages/StudentSubmission.tsx",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

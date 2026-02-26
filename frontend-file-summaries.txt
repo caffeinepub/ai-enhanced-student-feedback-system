@@ -1,0 +1,17 @@
+{
+  "frontend/src/index.css": "Global styles with a warm amber + teal OKLCH color system, custom font imports (Inter + Sora), utility classes for gradients, card hover effects, and score badge variants.",
+  "frontend/tailwind.config.js": "Extended Tailwind config with Inter/Sora font families, amber/teal custom color tokens, enhanced border-radius scale, card shadow variants, and fade/slide animation keyframes.",
+  "frontend/src/hooks/useQueries.ts": "All React Query hooks for backend integration — student CRUD, submission creation, feedback generation, and per-student stats queries.",
+  "frontend/src/components/Navigation.tsx": "Sticky responsive navigation header with logo, desktop nav links, mobile hamburger menu, and a CTA button using the amber-teal gradient.",
+  "frontend/src/components/Footer.tsx": "App footer with brand logo, navigation links, copyright year, and caffeine.ai attribution with UTM tracking.",
+  "frontend/src/components/FeedbackDisplay.tsx": "Reusable component rendering AI feedback results — score badge with conditional color, feedback paragraph card, and numbered suggestions list. Fixed conflicting `text-base`/`text-xs` Tailwind classes on the AI Score card title (kept `text-xs` only).",
+  "frontend/src/components/SubmissionCard.tsx": "Expandable card showing a single submission with assignment title, formatted timestamp, score pill, and collapsible feedback/suggestions section.",
+  "frontend/src/components/FeatureCard.tsx": "Reusable feature highlight card with icon image, title, description, and accent color variants for the landing page.",
+  "frontend/src/components/AddStudentForm.tsx": "Form component for adding new students with name/ID/course fields, validation, loading state, and success/error feedback.",
+  "frontend/src/components/StudentTable.tsx": "Responsive table of students with per-row stats (fetched via useGetStudentStats), view and delete action buttons.",
+  "frontend/src/pages/Home.tsx": "Landing page with hero section (banner image, CTAs), stats bar, three feature cards with generated icons, and a gradient CTA banner.",
+  "frontend/src/pages/StudentSubmission.tsx": "Assignment submission page with a validated form, word count indicator, loading states during backend calls, and inline FeedbackDisplay after submission.",
+  "frontend/src/pages/StudentDashboard.tsx": "Student history dashboard with ID lookup, aggregate stats (submissions, avg score), and sorted SubmissionCards with expandable feedback.",
+  "frontend/src/pages/InstructorPanel.tsx": "Instructor admin panel with aggregate stats, AddStudentForm, StudentTable with view/delete actions, and a StudentDetail drill-down view.",
+  "frontend/src/App.tsx": "Root app with TanStack Router setup, Layout component (Navigation + Outlet + Footer), all four routes, and Sonner Toaster."
+}
